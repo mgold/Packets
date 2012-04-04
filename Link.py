@@ -1,9 +1,17 @@
 import pygame
 from pygame.locals import *
-from math import sin, cos
+from math import sin, cos, atan2, pi
 
 class Link(pygame.sprite.Sprite):
+    """
+    Link - Moves Packets between Devices
 
+    Subclassing notes
+    Implement packet loss in send by only sometimes calling super.
+    There is currently no way to change the speed of packet travel.
+    You can change self.weight in mkLink.
+    """
+    
     def __init__ (self, screen, d1, d2):
         self.screen = screen
         self.d1 = d1
@@ -11,18 +19,23 @@ class Link(pygame.sprite.Sprite):
         self.pos1 = d1.pos
         self.pos2 = d2.pos
 
-        vector1 = (self.pos1[0] - self.pos2[0], self.pos1[1] - self.pos2[1])
-        vector2 = (self.pos2[0] - self.pos1[0], self.pos2[1] - self.pos1[1])
-        speed = .01
-        #self.toPos1 = (speed // vector1[0], speed // vector1[1])
-        #self.toPos2 = (speed // vector1[0], speed // vector1[1])
-        self.toPos1 = (speed * vector1[0], speed * vector1[1])
-        self.toPos2 = (speed * vector2[0], speed * vector2[1])
+        #Don't ask unless you like trig
+        theta = atan2(self.pos2[0] - self.pos1[0], self.pos1[1] - self.pos2[1])
+        alpha = atan2(self.pos1[0] - self.pos2[0], self.pos2[1] - self.pos1[1])
+        tau = 2*pi #tauday.com
+        for angle in [theta, alpha]:
+            if angle < 0:
+                angle += tau
+        speed = 5
+        #Payoff: dx and dy to either end at constant speed
+        self.toPos1 = (-speed * sin(theta), speed * cos(theta))
+        self.toPos2 = (-speed * sin(alpha), speed * cos(alpha))
 
         self.thickness = 5
         self.color = (128, 128, 128) 
 
         self.packets = []
+        self.weight = 1
 
     def send(self, packet, sender):
         if sender == self.d1:

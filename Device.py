@@ -4,13 +4,17 @@ from Packet import Packet
 from random import randint, choice
 
 class Device(pygame.sprite.Sprite):
+    """
+    Device - superclass of hosts, routers, servers, etc.
 
+    Subclassing note: treat self.links as read-only. 
+    """
     def __init__ (self, screen, x, y):
         self.screen = screen
         self.pos = (x, y) 
         self.radius = 20
         self.color = (0, 128, 255) 
-        
+
         self.links = [] #connected interfaces
 
     def update(self):

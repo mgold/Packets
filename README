@@ -1,5 +1,13 @@
 PACKETS
 A simulator by Max Goldstein
 
-Currently it's just the engine. Devices transmit packets across links. Specific
-protocols will be built on that engine.
+The core consists of:
+main.py (run this to see vanilla mode)
+Device.py
+Link.py
+Packet.py
+topology.txt
+loadLevel.py
+music.wav
+
+
