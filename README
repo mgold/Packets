@@ -1,0 +1,5 @@
+PACKETS
+A simulator by Max Goldstein
+
+Currently it's just the engine. Devices transmit packets across links. Specific
+protocols will be built on that engine.
