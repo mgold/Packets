@@ -2,26 +2,42 @@ import pygame
 from pygame.locals import *
 from main import packets
 from Router import Router
-from Junction import Junction
+from Subnet import Subnet
 
 """
-OSPF - well, not quite.
+OSPF
 
-Currently it's more a cross between OSPF and ARP, because IPs are associated
-with Devices rather than interfaces (sides of Links). Alternatively, say it's
-generic distance vector.  I'm working on it.
+Routers send out packets exchanging distance vector information, building their
+routing tables. Note that IP addresses are associated with an interface (one
+side of a link).
 """
 
 def OSPFmkDevice(screen, x, y, id):
     if id in '1234567890':
-        return Junction(screen, x, y)
+        subnet =  Subnet(screen, x, y)
+        subnet.IP = "192.168."+str(ord(list(id)[0]))+".0/24"
+        return subnet
     else:
         router = Router(screen, x, y)
-        router.IP = "192.168.0."+str(ord(list(id)[0]))
-        router.table[router.IP] = (0, None)
-                       #IP -> (distance, link)    
-        router.selected = router.IP == "192.168.0.66"
+        router.IP = str(ord(list(id)[0]))
+        router.selected = router.IP == "66"
         return router
 
+def OSPFconfigure(devices, links):
+    for device in filter(lambda d: not isinstance(d, Subnet), devices):
+        for link in device.links:
+            subnet = link.other(device)
+            if isinstance(subnet, Subnet):
+                IP = subnet.IP[:-4]+device.IP
+                device.interfaces[link] = IP
+                device.table[IP] = (0, None)
+                               #IP -> (distance, link)    
+                if len(device.links)==1:
+                    device.IP = IP
 
-packets(topology="OSPFtopology.txt", mkDevice=OSPFmkDevice)
+    for device in filter(lambda d: not isinstance(d, Subnet), devices):
+        if len(device.IP) < 4:
+            device.IP = "192.168.*."+device.IP
+                
+
+packets(topology="OSPFtopology.txt", mkDevice=OSPFmkDevice, configure=OSPFconfigure)

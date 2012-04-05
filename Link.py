@@ -64,6 +64,14 @@ class Link(pygame.sprite.Sprite):
     def remove(self, packet):
         self.packets.remove(packet)
 
+    def other(self, device):
+        if device == self.d1:
+            return self.d2
+        elif device == self.d2:
+            return self.d1
+        else:
+            return None
+
     def update(self):
         if self.active:
             for packet in self.packets:
@@ -76,3 +84,6 @@ class Link(pygame.sprite.Sprite):
             pygame.draw.line(self.screen, self.color, self.pos1, self.pos2, self.thickness)
             for packet in self.packets:
                 packet.draw()
+
+    def __repr__(self):
+        return "Link between "+self.d1.IP+" and "+self.d2.IP+"\n"
