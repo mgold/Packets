@@ -8,8 +8,11 @@ class Host(Router):
     def __init__ (self, screen, x, y):
         Router.__init__(self, screen, x, y)
 
+        self.radius = 12
         self.color = (0, 96, 191) 
        #self.packetColor = (128, 128, 191)
+
+        self.selectable = False
 
     def receive(self, packet):
         if packet.protocol == "OSPF":

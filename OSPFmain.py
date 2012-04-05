@@ -38,8 +38,8 @@ def OSPFconfigure(devices, links):
             if isinstance(subnet, Subnet):
                 IP = subnet.IP[:-4]+device.IP
                 device.interfaces[link] = IP
-                device.table[IP] = (0, None)
-                               #IP -> (distance, link)    
+                device.table[subnet.IP[:-5]] = (1, link)
+                               #x.y.z -> (distance, link)    
                 if len(device.links)==1:
                     device.IP = IP
 

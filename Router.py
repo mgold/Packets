@@ -43,8 +43,9 @@ class Router(Device):
             pl = packet.payload
             weight = packet.link.weight
             for entry in pl:
+                entry = entry[:10]
                 if entry not in self.table or pl[entry][0] + weight <= self.table[entry][0]:
-                        self.table[entry] = (pl[entry][0]+ weight, packet.link)
+                    self.table[entry] = (pl[entry][0]+ weight, packet.link)
 
     def draw(self):
         if self.selected:
@@ -70,7 +71,7 @@ class Router(Device):
             else:
                 x,y = link.toPos1
             if -0.001 < y < 0.001:
-                if x > 0:
+                if x < 0:
                     x = -self.radius - 145
                     y = 4
                 else:
@@ -107,16 +108,21 @@ class Router(Device):
     def drawTable(self):
         x = 40
         y = 470
+        dy = 19
         header = self.IPfont.render( "Routing Table for Router "+self.IP, 1, self.selectColor)
         self.screen.blit(header, (x, y))
-        for IP, (weight, link) in self.table.iteritems():
-            listing = IP.ljust(14) + str(weight).rjust(4)+"  "
-            if link:
-                listing += self.interfaces[link].ljust(16)
-            else:
-                listing += "localhost"
-            y += 19
+        for link in self.links:
+            listing = self.interfaces[link] + "/32  0  localhost"
+            y += dy
             rendlisting = self.IPfont.render(listing, 1, self.color)
             self.screen.blit(rendlisting, (x, y))
-        footer = self.IPfont.render(str(len(self.table))+" entries", 1, self.selectColor)
-        self.screen.blit(footer, (x, y+20))
+        for IP, (weight, link) in self.table.iteritems():
+            IP += ".0/24"
+            listing = IP.ljust(14) + str(weight).rjust(4)+"  "
+            listing += self.interfaces[link].ljust(16)
+            y += dy
+            rendlisting = self.IPfont.render(listing, 1, self.color)
+            self.screen.blit(rendlisting, (x, y))
+        footer = self.IPfont.render(str(len(self.table)+len(self.links))+
+            " entries, "+str(len(self.table))+" foreign", 1, self.selectColor)
+        self.screen.blit(footer, (x, y+dy))
