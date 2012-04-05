@@ -48,7 +48,7 @@ class Router(Device):
 
     def draw(self):
         if self.selected:
-            self.blitTable()
+            self.drawTable()
             pygame.draw.circle(self.screen, self.selectColor, self.pos, self.radius+5) 
 
         pygame.draw.circle(self.screen, self.color, self.pos, self.radius) 
@@ -58,17 +58,30 @@ class Router(Device):
             self.screen.blit(tableSize, (self.pos[0] - 7, self.pos[1] - 10))
         else:
             self.screen.blit(tableSize, (self.pos[0] - 15, self.pos[1] - 10))
+        
+        self.drawIPs()
 
+    def drawIPs(self):
         for link, IP in self.interfaces.iteritems():
-            address = self.IPfont.render(IP[8:], 1, self.color)
-            if len(self.interfaces) == 1:
-                self.screen.blit(address, (self.pos[0] - 60, self.pos[1] + self.radius + 4))
+            address = self.IPfont.render(IP, 1, self.color)
+            if link.d1 == self:
+                x,y = link.toPos2
             else:
-                if link.d1 == self:
-                    x,y = link.toPos2
+                x,y = link.toPos1
+            if -0.001 < y < 0.001:
+                if x > 0:
+                    x = -self.radius - 145
+                    y = 4
                 else:
-                    x,y = link.toPos1
-                self.screen.blit(address, (self.pos[0] + 10*x-27, self.pos[1] + 10*y - 20))
+                    x = self.radius + 5
+                    y = -20
+            elif -0.001 < x < 0.001:
+                if y > 0:
+                    y = self.radius + 15
+                else:
+                    y = -self.radius - 35
+                x = -81
+            self.screen.blit(address, (self.pos[0] + x, self.pos[1] + y))
 
     def __repr__(self):
         return "Router: "+self.IP
@@ -86,7 +99,7 @@ class Router(Device):
                 listing += "localhost\n"
         return "Routing Table for "+self.IP+"\n" + listing
 
-    def blitTable(self):
+    def drawTable(self):
         x = 40
         y = 470
         header = self.IPfont.render( "Routing Table for "+self.IP, 1, self.selectColor)
