@@ -4,8 +4,8 @@ from Packet import Packet
 from Router import Router
 from copy import copy
 
-class Junction(Router):
-    """Junction
+class Subnet(Router):
+    """Subnet
 
     A dirty hack. Allows many-to-many join of routers, with the hopes of
     assigning IPs to interfaces instead of devices.

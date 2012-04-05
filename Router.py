@@ -12,10 +12,13 @@ class Router(Device):
         
         self.packetColor = (128, 255, 128)
 
-        self.IPfont = pygame.font.SysFont(u'couriernew,courier', 22, bold=True)
+        self.IPfont = pygame.font.SysFont(u'couriernew,courier', 18, bold=True)
         self.font = pygame.font.Font(None, 36)
 
+        #table is all known routers, interfaces is local links to subnets
         self.table = {}
+        self.interfaces = {}
+        
         self.IP = "IP Unset"
         self.selectColor = (191, 191, 191)
     
@@ -40,8 +43,8 @@ class Router(Device):
             pl = packet.payload
             weight = packet.link.weight
             for entry in pl:
-                if entry not in self.table or pl[entry][0] + weight < self.table[entry][0]:
-                        self.table[entry] = (pl[entry][0]+ weight, pl[entry][1])
+                if entry not in self.table or pl[entry][0] + weight <= self.table[entry][0]:
+                        self.table[entry] = (pl[entry][0]+ weight, packet.link)
 
     def draw(self):
         if self.selected:
@@ -56,9 +59,20 @@ class Router(Device):
         else:
             self.screen.blit(tableSize, (self.pos[0] - 15, self.pos[1] - 10))
 
-        address = self.IPfont.render(self.IP, 1, self.color)
-        self.screen.blit(address, (self.pos[0] - 60, self.pos[1] + self.radius +10))
-        
+        for link, IP in self.interfaces.iteritems():
+            address = self.IPfont.render(IP[8:], 1, self.color)
+            if len(self.interfaces) == 1:
+                self.screen.blit(address, (self.pos[0] - 60, self.pos[1] + self.radius + 4))
+            else:
+                if link.d1 == self:
+                    x,y = link.toPos2
+                else:
+                    x,y = link.toPos1
+                self.screen.blit(address, (self.pos[0] + 10*x-27, self.pos[1] + 10*y - 20))
+
+    def __repr__(self):
+        return "Router: "+self.IP
+
     def __str__(self):
         listing = ""
         for IP, (weight, link) in self.table.iteritems():
@@ -74,20 +88,17 @@ class Router(Device):
 
     def blitTable(self):
         x = 40
-        y = 500
+        y = 470
         header = self.IPfont.render( "Routing Table for "+self.IP, 1, self.selectColor)
         self.screen.blit(header, (x, y))
         for IP, (weight, link) in self.table.iteritems():
             listing = IP.ljust(14) + str(weight).rjust(4)+"  "
             if link:
-                if link.d1 == self:
-                    listing += link.d2.IP.ljust(16)
-                else:
-                    listing += link.d1.IP.ljust(16)
+                listing += self.interfaces[link].ljust(16)
             else:
                 listing += "localhost"
-            y += 20
+            y += 19
             rendlisting = self.IPfont.render(listing, 1, self.color)
             self.screen.blit(rendlisting, (x, y))
-        footer = self.IPfont.render(str(len(self.table))+" entries", 1, self.color)
+        footer = self.IPfont.render(str(len(self.table))+" entries", 1, self.selectColor)
         self.screen.blit(footer, (x, y+20))

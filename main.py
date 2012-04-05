@@ -6,7 +6,7 @@ def quit():
     pygame.quit()
     sys.exit()
 
-def packets(topology="topology.txt", mkDevice=None, mkLink=None):
+def packets(topology="topology.txt", mkDevice=None, mkLink=None, configure=None):
 
     pygame.init()
 
@@ -31,6 +31,9 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None):
     #Read in a file to generate the sprites on a level
     devices, links = loadLevel(topology, screen, mkDevice, mkLink)
 
+    if configure:
+        configure(devices, links)
+
     try:
         selectedDevice = filter (lambda d: d.selected, devices)[0]
     except:
@@ -50,11 +53,14 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None):
             elif event.type == MOUSEBUTTONDOWN:
                 for device in devices:
                     if device.rect.collidepoint(event.pos) and device.selectable:
-                        device.selected = True
-                        if selectedDevice:
-                            selectedDevice.selected = False
-                        selectedDevice = device
-
+                        if selectedDevice and selectedDevice == device:
+                            device.selected = False
+                            selectedDevice = None
+                        else:
+                            device.selected = True
+                            if selectedDevice:
+                                selectedDevice.selected = False
+                            selectedDevice = device
 
         #Update
         for device in devices:
