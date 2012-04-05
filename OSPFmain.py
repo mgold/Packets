@@ -8,7 +8,8 @@ from Junction import Junction
 OSPF - well, not quite.
 
 Currently it's more a cross between OSPF and ARP, because IPs are associated
-with Devices rather than interfaces (sides of Links). I'm working on it.
+with Devices rather than interfaces (sides of Links). Alternatively, say it's
+generic distance vector.  I'm working on it.
 """
 
 def OSPFmkDevice(screen, x, y, id):
@@ -17,8 +18,9 @@ def OSPFmkDevice(screen, x, y, id):
     else:
         router = Router(screen, x, y)
         router.IP = "192.168.0."+str(ord(list(id)[0]))
-        router.table = {router.IP : (0, None)}
-                        #IP -> (distance, link)    
+        router.table[router.IP] = (0, None)
+                       #IP -> (distance, link)    
+        router.selected = router.IP == "192.168.0.66"
         return router
 
 

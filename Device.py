@@ -13,7 +13,12 @@ class Device(pygame.sprite.Sprite):
         self.screen = screen
         self.pos = (x, y) 
         self.radius = 20
+        self.rect = pygame.Rect(x-self.radius, y-self.radius, 2*self.radius, 2*self.radius)
+
         self.color = (0, 128, 255) 
+
+        self.selectable = True
+        self.selected = False
 
         self.links = [] #connected interfaces
 

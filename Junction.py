@@ -14,7 +14,7 @@ class Junction(Router):
 
     def __init__ (self, screen, x, y):
         Router.__init__(self, screen, x, y)
-        self.table = {}
+        self.selectable = False
 
     def update(self):
         pass

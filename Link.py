@@ -9,7 +9,7 @@ class Link(pygame.sprite.Sprite):
     Extention notes:
     Avoid subclassing if at all possible.
     In your mkLink, use the optional parameter in the constructor to change the speed of packet
-    travel. Set self.weight after instatiation.
+    travel. Set self.weight after instatiation. Make changes in topology with self.active.
     """
     
     def __init__ (self, screen, d1, d2, speed=5):
@@ -35,38 +35,44 @@ class Link(pygame.sprite.Sprite):
 
         self.packets = []
         self.weight = 1
+        self.active = True
 
     def send(self, packet, sender):
-        if sender == self.d1:
-            packet.destination = self.d2
-            packet.x = self.pos1[0] - packet.halfside
-            packet.y = self.pos1[1] - packet.halfside
-            packet.dx = self.toPos2[0]
-            packet.dy = self.toPos2[1]
-            packet.link = self
-            packet.targx = self.pos2[0]
-            packet.targy = self.pos2[1]
-            self.packets.append(packet)
+        if self.active:
+            if sender == self.d1:
+                packet.destination = self.d2
+                packet.x = self.pos1[0] - packet.halfside
+                packet.y = self.pos1[1] - packet.halfside
+                packet.dx = self.toPos2[0]
+                packet.dy = self.toPos2[1]
+                packet.link = self
+                packet.targx = self.pos2[0]
+                packet.targy = self.pos2[1]
+                self.packets.append(packet)
 
-        elif sender == self.d2:
-            packet.destination = self.d1
-            packet.x = self.pos2[0] - packet.halfside
-            packet.y = self.pos2[1] - packet.halfside
-            packet.dx = self.toPos1[0]
-            packet.dy = self.toPos1[1]
-            packet.link = self
-            packet.targx = self.pos1[0]
-            packet.targy = self.pos1[1]
-            self.packets.append(packet)
+            elif sender == self.d2:
+                packet.destination = self.d1
+                packet.x = self.pos2[0] - packet.halfside
+                packet.y = self.pos2[1] - packet.halfside
+                packet.dx = self.toPos1[0]
+                packet.dy = self.toPos1[1]
+                packet.link = self
+                packet.targx = self.pos1[0]
+                packet.targy = self.pos1[1]
+                self.packets.append(packet)
 
     def remove(self, packet):
         self.packets.remove(packet)
 
     def update(self):
-        for packet in self.packets:
-            packet.update()
+        if self.active:
+            for packet in self.packets:
+                packet.update()
+        else:
+            self.packets = []
 
     def draw(self):
-        pygame.draw.line(self.screen, self.color, self.pos1, self.pos2, self.thickness)
-        for packet in self.packets:
-            packet.draw()
+        if self.active:
+            pygame.draw.line(self.screen, self.color, self.pos1, self.pos2, self.thickness)
+            for packet in self.packets:
+                packet.draw()

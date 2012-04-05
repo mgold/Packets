@@ -31,6 +31,11 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None):
     #Read in a file to generate the sprites on a level
     devices, links = loadLevel(topology, screen, mkDevice, mkLink)
 
+    try:
+        selectedDevice = filter (lambda d: d.selected, devices)[0]
+    except:
+        selectedDevice = None
+
     #game loop
     while True:
         time_passed = clock.tick(FPS)
@@ -42,6 +47,14 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None):
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     quit()
+            elif event.type == MOUSEBUTTONDOWN:
+                for device in devices:
+                    if device.rect.collidepoint(event.pos) and device.selectable:
+                        device.selected = True
+                        if selectedDevice:
+                            selectedDevice.selected = False
+                        selectedDevice = device
+
 
         #Update
         for device in devices:
