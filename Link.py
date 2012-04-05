@@ -40,6 +40,8 @@ class Link(pygame.sprite.Sprite):
     def send(self, packet, sender):
         if sender == self.d1:
             packet.destination = self.d2
+            packet.x = self.pos1[0] - packet.halfside
+            packet.y = self.pos1[1] - packet.halfside
             packet.dx = self.toPos2[0]
             packet.dy = self.toPos2[1]
             packet.link = self
@@ -49,6 +51,8 @@ class Link(pygame.sprite.Sprite):
 
         elif sender == self.d2:
             packet.destination = self.d1
+            packet.x = self.pos2[0] - packet.halfside
+            packet.y = self.pos2[1] - packet.halfside
             packet.dx = self.toPos1[0]
             packet.dy = self.toPos1[1]
             packet.link = self

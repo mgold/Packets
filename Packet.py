@@ -10,11 +10,12 @@ class Packet(pygame.sprite.Sprite):
 
     def __init__ (self, screen, x, y):
         self.side = 12
+        self.halfside = self.side//2
         self.color = (255, 128, 128) 
         
         self.screen = screen
-        self.x = x - self.side//2
-        self.y = y - self.side//2
+        self.x = x - self.halfside
+        self.y = y - self.halfside
         self.dx = self.dy = 0
         self.targx = self.targy = 0
 

@@ -2,7 +2,6 @@ import pygame
 from pygame.locals import *
 from Packet import Packet
 from Device import Device
-from random import randint, choice
 from copy import copy
 
 class Router(Device):
@@ -38,6 +37,9 @@ class Router(Device):
     def draw(self):
         pygame.draw.circle(self.screen, self.color, self.pos, self.radius) 
         tableSize = self.font.render(str(len(self.table)), 1, (0,0,0))
-        self.screen.blit(tableSize, (self.pos[0] - 7, self.pos[1] - 10))
+        if len(self.table) < 10:
+            self.screen.blit(tableSize, (self.pos[0] - 7, self.pos[1] - 10))
+        else:
+            self.screen.blit(tableSize, (self.pos[0] - 15, self.pos[1] - 10))
         address = self.IPfont.render(self.IP, 1, self.color)
-        self.screen.blit(address, (self.pos[0] - 50, self.pos[1] + self.radius +10))
+        self.screen.blit(address, (self.pos[0] - 60, self.pos[1] + self.radius +10))
