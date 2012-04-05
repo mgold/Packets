@@ -30,9 +30,10 @@ class Router(Device):
     def receive(self, packet):
         if packet.protocol == "OSPF":
             pl = packet.payload
+            weight = packet.link.weight
             for entry in pl:
-                if entry not in self.table or pl[entry][0] + 1 < self.table[entry]:
-                        self.table[entry] = (pl[entry][0]+1, pl[entry][1])
+                if entry not in self.table or pl[entry][0] + weight < self.table[entry]:
+                        self.table[entry] = (pl[entry][0]+ weight, pl[entry][1])
     
     def draw(self):
         pygame.draw.circle(self.screen, self.color, self.pos, self.radius) 

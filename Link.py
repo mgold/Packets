@@ -6,13 +6,13 @@ class Link(pygame.sprite.Sprite):
     """
     Link - Moves Packets between Devices
 
-    Subclassing notes
-    Implement packet loss in send by only sometimes calling super.
-    There is currently no way to change the speed of packet travel.
-    You can change self.weight in mkLink.
+    Extention notes:
+    Avoid subclassing if at all possible.
+    In your mkLink, use the optional parameter in the constructor to change the speed of packet
+    travel. Set self.weight after instatiation.
     """
     
-    def __init__ (self, screen, d1, d2):
+    def __init__ (self, screen, d1, d2, speed=5):
         self.screen = screen
         self.d1 = d1
         self.d2 = d2
@@ -26,7 +26,6 @@ class Link(pygame.sprite.Sprite):
         for angle in [theta, alpha]:
             if angle < 0:
                 angle += tau
-        speed = 5
         #Payoff: dx and dy to either end at constant speed
         self.toPos1 = (-speed * sin(theta), speed * cos(theta))
         self.toPos2 = (-speed * sin(alpha), speed * cos(alpha))

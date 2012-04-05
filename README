@@ -1,7 +1,7 @@
 PACKETS
-A simulator by Max Goldstein
+A network simulator by Max Goldstein
 
-The core consists of:
+Packets consists of a core and modules.  The core consists of:
 main.py (run this to see vanilla mode)
 Device.py
 Link.py
@@ -10,6 +10,9 @@ topology.txt
 loadLevel.py
 music.wav
 
+Avoid modifying the core.
+
 There are ways to extend the core (for example, to model specific protocols) by
-subclassing and function pointers. See loadLevel.py for more documentation, or
+subclassing Device, using a different network topology, and passing functions to
+configure Device and Link objects. See loadLevel.py for more documentation, or
 see OSPFmain.py and Router.py for an example.

@@ -7,6 +7,15 @@ def abs(x):
     return x
 
 class Packet(pygame.sprite.Sprite):
+    """
+    Packet - the actual data transfer
+
+    Extention notes:
+    Avoid subclassing.
+    Custom subclasses of Device should create Packets, configure internal
+    variables (color and protocol are of interest), and add additional member
+    variables to carry protocol-specific data.
+    """
 
     def __init__ (self, screen, x, y):
         self.side = 12
