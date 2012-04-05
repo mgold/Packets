@@ -6,13 +6,12 @@ def quit():
     pygame.quit()
     sys.exit()
 
-def packets(levelName="topology.txt", mkDevice=None, mkLink=None):
+def packets(topology="topology.txt", mkDevice=None, mkLink=None):
 
     pygame.init()
 
     #Music
     try:
-        pygame.mixer.init()
         pygame.mixer.music.load("music.wav")
         pygame.mixer.music.play(-1)
     except:
@@ -30,7 +29,7 @@ def packets(levelName="topology.txt", mkDevice=None, mkLink=None):
     time_passed = 0
 
     #Read in a file to generate the sprites on a level
-    devices, links = loadLevel(levelName, screen, mkDevice, mkLink)
+    devices, links = loadLevel(topology, screen, mkDevice, mkLink)
 
     #game loop
     while True:

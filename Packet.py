@@ -17,10 +17,13 @@ class Packet(pygame.sprite.Sprite):
         self.y = y - self.side//2
         self.dx = self.dy = 0
         self.targx = self.targy = 0
+
         self.link = None
         self.destination = None
 
         self.rect = pygame.Rect(self.x, self.y, self.side, self.side)
+        
+        self.protocol = "generic"
 
     def update(self):
         self.x += self.dx
@@ -30,9 +33,8 @@ class Packet(pygame.sprite.Sprite):
            abs(self.y - self.targy) < targetSize):
             if self.link:
                 self.link.remove(self)
-            self.destination.receive(self)
-            self.link = self.destination
-            self.destination = None
+            if self.destination:
+                self.destination.receive(self)
 
         self.rect = pygame.Rect(self.x, self.y, self.side, self.side)
 

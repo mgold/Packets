@@ -10,4 +10,6 @@ topology.txt
 loadLevel.py
 music.wav
 
-
+There are ways to extend the core (for example, to model specific protocols) by
+subclassing and function pointers. See loadLevel.py for more documentation, or
+see OSPFmain.py and Router.py for an example.
