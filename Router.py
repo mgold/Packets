@@ -52,14 +52,15 @@ class Router(Device):
             pygame.draw.circle(self.screen, self.selectColor, self.pos, self.radius+5) 
 
         pygame.draw.circle(self.screen, self.color, self.pos, self.radius) 
-
+        self.drawTableSize()
+        self.drawIPs()
+        
+    def drawTableSize(self):
         tableSize = self.font.render(str(len(self.table)), 1, (0,0,0))
         if len(self.table) < 10:
             self.screen.blit(tableSize, (self.pos[0] - 7, self.pos[1] - 10))
         else:
-            self.screen.blit(tableSize, (self.pos[0] - 15, self.pos[1] - 10))
-        
-        self.drawIPs()
+            self.screen.blit(tableSize, (self.pos[0] - 13, self.pos[1] - 10))
 
     def drawIPs(self):
         for link, IP in self.interfaces.iteritems():
@@ -81,6 +82,10 @@ class Router(Device):
                 else:
                     y = -self.radius - 35
                 x = -81
+            else:
+                x *= 5
+                x -= 50
+                y *= 5
             self.screen.blit(address, (self.pos[0] + x, self.pos[1] + y))
 
     def __repr__(self):
@@ -102,7 +107,7 @@ class Router(Device):
     def drawTable(self):
         x = 40
         y = 470
-        header = self.IPfont.render( "Routing Table for "+self.IP, 1, self.selectColor)
+        header = self.IPfont.render( "Routing Table for Router "+self.IP, 1, self.selectColor)
         self.screen.blit(header, (x, y))
         for IP, (weight, link) in self.table.iteritems():
             listing = IP.ljust(14) + str(weight).rjust(4)+"  "

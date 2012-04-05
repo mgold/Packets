@@ -47,8 +47,8 @@ def OSPFconfigure(devices, links):
         if len(device.IP) < 4:
             device.IP = "192.168.*."+device.IP
         if isinstance(device, Host):
-            device.link = device.links[0]
-            assert(len(device.links)==1)
-
+            host = device
+            host.link = host.links[0]
+            assert(len(host.links)==1)
 
 packets(topology="OSPFtopology.txt", mkDevice=OSPFmkDevice, configure=OSPFconfigure)
