@@ -43,10 +43,17 @@ class Packet(pygame.sprite.Sprite):
            abs(self.y - self.targy) < targetSize):
             if self.link:
                 self.link.remove(self)
-            if self.destination:
-                self.destination.receive(self)
+            if self.targdev:
+                self.targdev.receive(self)
 
         self.rect = pygame.Rect(self.x, self.y, self.side, self.side)
 
     def draw(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
+
+    def __str__(self):
+        toreturn = "Packet of protocol "+self.protocol
+        if self.destination:
+            toreturn += ", destination "+str(self.destination)
+        toreturn += "."
+        return toreturn

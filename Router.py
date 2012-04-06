@@ -32,6 +32,9 @@ class Router(Device):
                 packetCopy = copy(packet)
                 for entry in self.table:
                     if self.table[entry][1] != link: #poisoned reverse
+                        interface = self.interfaces[link]
+                        packetCopy.source = interface
+                        packetCopy.destination = interface[:-2]+"255"
                         packetCopy.payload[entry] = (self.table[entry][0], link)
                 link.send(packetCopy, self)
             self.timer = 250
@@ -43,9 +46,16 @@ class Router(Device):
             pl = packet.payload
             weight = packet.link.weight
             for entry in pl:
-                entry = entry[:10]
+                if entry != "DNS":
+                    entry = entry[:10]
                 if entry not in self.table or pl[entry][0] + weight <= self.table[entry][0]:
                     self.table[entry] = (pl[entry][0]+ weight, packet.link)
+        elif packet.protocol == "DNS Request":
+            if "DNS" in self.table:
+                self.table["DNS"][1].send(packet, self)
+        elif packet.protocol == "DNS Response":
+            if packet.destination[:10] in self.table:
+                self.table[packet.destination[:10]][1].send(packet, self)
 
     def draw(self):
         if self.selected:
@@ -53,10 +63,10 @@ class Router(Device):
             pygame.draw.circle(self.screen, self.selectColor, self.pos, self.radius+5) 
 
         pygame.draw.circle(self.screen, self.color, self.pos, self.radius) 
-        self.drawTableSize()
+        self.drawLabel()
         self.drawIPs()
         
-    def drawTableSize(self):
+    def drawLabel(self):
         tableSize = self.font.render(str(len(self.table)), 1, (0,0,0))
         if len(self.table) < 10:
             self.screen.blit(tableSize, (self.pos[0] - 7, self.pos[1] - 10))
@@ -103,7 +113,7 @@ class Router(Device):
                     listing += link.d1.IP.ljust(16) + "\n"
             else:
                 listing += "localhost\n"
-        return "Routing Table for "+self.IP+"\n" + listing
+        return "Router "+self.IP+"\n" + listing
 
     def drawTable(self):
         x = 40
@@ -117,7 +127,10 @@ class Router(Device):
             rendlisting = self.IPfont.render(listing, 1, self.color)
             self.screen.blit(rendlisting, (x, y))
         for IP, (weight, link) in self.table.iteritems():
-            IP += ".0/24"
+            if IP != "DNS":
+                IP += ".0/24"
+            else:
+                IP = "DNS            "
             listing = IP.ljust(14) + str(weight).rjust(4)+"  "
             listing += self.interfaces[link].ljust(16)
             y += dy

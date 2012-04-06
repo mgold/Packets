@@ -10,13 +10,34 @@ class Host(Router):
 
         self.radius = 12
         self.color = (0, 96, 191) 
-       #self.packetColor = (128, 128, 191)
+        self.packetColor = (128, 128, 191)
 
+        self.font = pygame.font.Font(None, 28)
         self.selectable = False
+        self.name = ""
+        self.names = {}
+
+
+    def update(self):
+        if self.name == "Alice" and "Bob" not in self.names:
+            if self.timer == 0:
+                request = Packet(self.screen, self.pos[0], self.pos[1])
+                request.color = (191, 128, 128)
+                request.protocol = "DNS Request"
+                request.source = self.IP
+                request.destination = "DNS"
+                request.request = "Bob"
+                self.link.send(request, self)
+                self.timer = 250
+            else:
+                self.timer -= 1
 
     def receive(self, packet):
         if packet.protocol == "OSPF":
             pass
+        elif packet.protocol == "DNS Response":
+            if packet.code != 404:
+                self.names[packet.response[0]] = packet.response[1] 
 
     def drawIPs(self):
         address = self.IPfont.render(self.IP, 1, self.color)
@@ -25,18 +46,25 @@ class Host(Router):
     def drawTable(self):
         x = 40
         y = 470
-        header = self.IPfont.render("Forwarding Table for Host "+self.IP, 1, self.selectColor)
-        local = self.IPfont.render(self.IP.ljust(16)+"localhost", 1, self.color)
-        outside = self.IPfont.render("0.0.0.0/0       "+self.IP, 1, self.color)
-        footer = self.IPfont.render("2 entries", 1, self.selectColor)
+        dy = 19
+        headerText = "Name Table for Host "+self.IP
+        if self.name:
+            headerText += " ("+self.name+")"
+        header = self.IPfont.render(headerText, 1, self.selectColor)
+        self.screen.blit(header, (x, y))
 
-        self.screen.blit(header,  (x, y))
-        self.screen.blit(local,   (x, y+20))
-        self.screen.blit(outside, (x, y+40))
-        self.screen.blit(footer,  (x, y+60))
+        for name, IP in self.names.iteritems():
+            label = self.IPfont.render(name.ljust(8)+IP, 1, self.color)
+            y += dy
+            self.screen.blit(label, (x, y))
+            
+        footer = self.IPfont.render(str(len(self.names))+" entries", 1, self.selectColor)
+        self.screen.blit(footer,  (x, y+dy))
        
-    def drawTableSize(self):
-        pass
+    def drawLabel(self):
+        if self.name:
+            name = self.font.render(self.name[0], 1, (0,0,0))
+            self.screen.blit(name, (self.pos[0] - 7, self.pos[1] - 10))
 
     def __repr__(self):
         return "Host: "+self.IP
