@@ -6,6 +6,9 @@ from random import randint, choice
 class Device(pygame.sprite.Sprite):
     """
     Device - superclass of hosts, routers, servers, etc.
+    
+    When no overriden by a subclass, sends packets at random and forwards or
+    drops packets at random.
 
     Subclassing note: treat self.links as read-only. 
     """
@@ -24,11 +27,12 @@ class Device(pygame.sprite.Sprite):
         self.links = [] #connected interfaces
 
     def update(self):
-        if randint(0, 20) == 5:
+        if randint(0, 250) == 1:
             choice(self.links).send(Packet(self.screen, self.pos[0], self.pos[1]), self)
 
     def receive(self, packet):
-        pass
+        if randint(0, 3) != 1:
+            choice(filter(lambda l: l != packet.link, self.links)).send(packet, self)
 
     def draw(self):
         pygame.draw.circle(self.screen, self.color, self.pos, self.radius) 

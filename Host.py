@@ -15,7 +15,6 @@ class Host(Device):
         #Similar to router
         self.font = pygame.font.Font(None, 28)
         self.IPfont = pygame.font.SysFont(u'couriernew,courier', 18, bold=True)
-        self.timer = 0
 
         self.selectable = False
         self.name = ""

@@ -15,9 +15,11 @@ class Router(Device):
         self.IPfont = pygame.font.SysFont(u'couriernew,courier', 18, bold=True)
         self.font = pygame.font.Font(None, 36)
 
-        #table is all known routers, interfaces is local links to subnets
         self.table = {}
+        #All IPs -> (weight, local Link)
+
         self.interfaces = {}
+        #local Link -> local IP
         
         self.IP = "IP Unset"
     
@@ -41,20 +43,26 @@ class Router(Device):
             self.timer -= 1
 
     def receive(self, packet):
+        if packet.destination[-3:] == "255":
+            self.broadcast(packet)
+        elif self.IP[:10] == packet.destination[:10]:
+            self.sendLocal(packet)
+        elif packet.destination[:10] in self.table:
+            self.table[packet.destination[:10]][1].send(packet, self)
+
         if packet.protocol == "OSPF":
             pl = packet.payload
             weight = packet.link.weight
             for entry in pl:
-                if entry != "DNS":
-                    entry = entry[:10]
+                entry = entry[:10]
                 if entry not in self.table or pl[entry][0] + weight <= self.table[entry][0]:
                     self.table[entry] = (pl[entry][0]+ weight, packet.link)
-        elif packet.protocol == "DNS Request":
-            if "DNS" in self.table:
-                self.table["DNS"][1].send(packet, self)
-        elif packet.protocol == "DNS Response":
-            if packet.destination[:10] in self.table:
-                self.table[packet.destination[:10]][1].send(packet, self)
+
+    def broadcast(self, packet):
+        pass
+
+    def sendLocal(self, packet):
+        pass
 
     def draw(self):
         if self.selected:

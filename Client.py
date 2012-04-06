@@ -9,6 +9,7 @@ class Client(Host):
         Host.__init__(self, screen, x, y)
         self.selectable = True        
         self.corespondent = self.name
+        self.timer = 0
 
     def update(self):
         if self.corespondent not in self.names:
