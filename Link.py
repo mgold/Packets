@@ -30,6 +30,16 @@ class Link(pygame.sprite.Sprite):
         self.toPos1 = (-speed * sin(theta), speed * cos(theta))
         self.toPos2 = (-speed * sin(alpha), speed * cos(alpha))
 
+        #Exact zeroes are better than 3.06161699787e-16
+        if abs(self.toPos1[0]) < 0.001:
+            self.toPos1 = (0, self.toPos1[1])
+        if abs(self.toPos1[1]) < 0.001:
+            self.toPos1 = (self.toPos1[0], 0)
+        if abs(self.toPos2[0]) < 0.001:
+            self.toPos2 = (0, self.toPos2[1])
+        if abs(self.toPos2[1]) < 0.001:
+            self.toPos2 = (self.toPos2[0], 0)
+
         self.thickness = 5
         self.color = (128, 128, 128) 
 

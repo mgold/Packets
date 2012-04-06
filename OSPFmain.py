@@ -3,8 +3,9 @@ from pygame.locals import *
 from main import packets
 from Router import Router
 from Subnet import Subnet
-from Host import Host
 from DNS import DNS
+from Host import Host
+from Client import Client
 
 """
 OSPF
@@ -29,14 +30,17 @@ def OSPFmkDevice(screen, x, y, id):
         router.selected = router.IP == "66"
         return router
     elif id.islower():
-        host = Host(screen, x ,y)
-        host.IP = str(ord(list(id)[0]))
-        if id == "q":
+        if id == "h":
+            host = Client(screen, x, y)
             host.name = "Alice"
-            host.selectable = True
-        if id == "x":
+            host.corespondent = "Bob"
+        elif id == "x":
+            host = Client(screen, x, y)
             host.name = "Bob"
-            host.selectable = True
+            host.corespondent = "Alice"
+        else:
+            host = Host(screen, x ,y)
+        host.IP = str(ord(list(id)[0]))
         return host
     else:
         print "Unrecognized unique identifier in sprite map"
@@ -49,14 +53,18 @@ def OSPFconfigure(devices, links):
             subnet = link.other(device)
             if isinstance(subnet, Subnet):
                 IP = subnet.IP[:-4]+device.IP
-                device.interfaces[link] = IP
-                device.table[subnet.IP[:-5]] = (1, link)
-                               #x.y.z -> (distance, link)    
+                if isinstance(device, Router):
+                    device.interfaces[link] = IP
+                    device.table[subnet.IP[:-5]] = (1, link)
+                                   #x.y.z -> (distance, link)    
+            else:
+                print "Devices connected directly, rather than through a Subnet"
             if len(device.links)==1:
                 device.IP = IP
             if isinstance(device, Host):
                 if device.name:
                     names[device.name] = device.IP
+                    device.names[device.name] = device.IP
                 
     for device in filter(lambda d: not isinstance(d, Subnet), devices):
         if len(device.IP) < 4:

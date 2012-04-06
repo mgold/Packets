@@ -1,11 +1,6 @@
 import pygame
 from pygame.locals import *
 
-def abs(x):
-    if x < 0:
-        return -x
-    return x
-
 class Packet(pygame.sprite.Sprite):
     """
     Packet - the actual data transfer

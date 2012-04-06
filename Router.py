@@ -20,7 +20,6 @@ class Router(Device):
         self.interfaces = {}
         
         self.IP = "IP Unset"
-        self.selectColor = (191, 191, 191)
     
     def update(self):
         if self.timer == 0:
@@ -80,40 +79,33 @@ class Router(Device):
                 x,y = link.toPos2
             else:
                 x,y = link.toPos1
-            if -0.001 < y < 0.001:
+            if y == 0:
                 if x < 0:
                     x = -self.radius - 145
                     y = 4
                 else:
                     x = self.radius + 5
                     y = -20
-            elif -0.001 < x < 0.001:
+            elif x == 0:
                 if y > 0:
                     y = self.radius + 15
                 else:
-                    y = -self.radius - 35
+                    y = -self.radius - 25
                 x = -81
+            elif x < 0 and y < 0:
+                x *= 5
+                x -= 90
+                y = -self.radius - 17
+            elif x < 0 and y > 0:
+                x *= 5
+                x -= 50
+                y *= 5
+                y += 5
             else:
                 x *= 5
                 x -= 50
                 y *= 5
             self.screen.blit(address, (self.pos[0] + x, self.pos[1] + y))
-
-    def __repr__(self):
-        return "Router: "+self.IP
-
-    def __str__(self):
-        listing = ""
-        for IP, (weight, link) in self.table.iteritems():
-            listing += IP.ljust(16) + str(weight).rjust(4)+"  "
-            if link:
-                if link.d1 == self:
-                    listing += link.d2.IP.ljust(16) + "\n"
-                else:
-                    listing += link.d1.IP.ljust(16) + "\n"
-            else:
-                listing += "localhost\n"
-        return "Router "+self.IP+"\n" + listing
 
     def drawTable(self):
         x = 40
@@ -139,3 +131,21 @@ class Router(Device):
         footer = self.IPfont.render(str(len(self.table)+len(self.links))+
             " entries, "+str(len(self.table))+" foreign", 1, self.selectColor)
         self.screen.blit(footer, (x, y+dy))
+
+
+    def __repr__(self):
+        return "Router: "+self.IP
+
+    def __str__(self):
+        listing = ""
+        for IP, (weight, link) in self.table.iteritems():
+            listing += IP.ljust(16) + str(weight).rjust(4)+"  "
+            if link:
+                if link.d1 == self:
+                    listing += link.d2.IP.ljust(16) + "\n"
+                else:
+                    listing += link.d1.IP.ljust(16) + "\n"
+            else:
+                listing += "localhost\n"
+        return "Router "+self.IP+"\n" + listing
+

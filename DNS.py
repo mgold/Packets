@@ -10,6 +10,7 @@ class DNS(Router):
 
         self.color = (191, 96, 96) 
         self.packetColor = (191, 128, 128)
+        self.font = pygame.font.Font(None, 24)
 
         self.names = {}
 
@@ -47,10 +48,6 @@ class DNS(Router):
                 respacket.code = 404
             packet.link.send(respacket, self)
 
-    def drawIPs(self):
-        address = self.IPfont.render(self.IP, 1, self.color)
-        self.screen.blit(address, (self.pos[0] - 75, self.pos[1] + self.radius + 4)) 
-    
     def drawTable(self):
         x = 40
         y = 470
@@ -67,7 +64,7 @@ class DNS(Router):
         self.screen.blit(footer,  (x, y+dy))
        
     def drawLabel(self):
-        return None
+        self.screen.blit(self.font.render("DNS", 1, (0,0,0)), (self.pos[0] - self.radius + 2, self.pos[1] - 6))
 
     def __repr__(self):
         return "DNS: "+self.IP

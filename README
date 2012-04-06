@@ -16,3 +16,16 @@ There are ways to extend the core (for example, to model specific protocols) by
 subclassing Device, using a different network topology, and passing functions to
 configure Device and Link objects. See loadLevel.py for more documentation, or
 see OSPFmain.py and Router.py for an example.
+
+Device class hierarchy
+
+      pygame.sprite
+            |
+            V
+          Device
+            /\
+          /    \
+      Router  Host
+      /\        |
+    /    \      V
+ Subnet  DNS   Client
