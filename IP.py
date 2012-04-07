@@ -7,6 +7,7 @@ class IP:
             self.address += bin(byte)[2:].zfill(8)
             self.humanReadable += str(byte) + '.'
         self.humanReadable = self.humanReadable[:-1] + '/' + str(cidr)
+        self.hash = ''.join(filter(lambda c: c != '.' and c != '/', list(self.humanReadable)))
         self.address = int(self.address, 2)
 
         self.cidr = cidr
@@ -17,6 +18,12 @@ class IP:
 
     def __cmp__(self, otherIP):
         return self.address.__cmp__(otherIP.address)
+
+    def __eq__(self, otherIP):
+        return self.address == otherIP.address and self.cidr == otherIP.cidr
+
+    def __hash__(self):
+        return self.hash
 
     def __str__(self):
         return self.humanReadable
