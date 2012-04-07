@@ -3,6 +3,7 @@ from pygame.locals import *
 from Packet import Packet
 from Host import Host
 from copy import copy
+from IP import DNSIP
 
 class Client(Host):
     def __init__ (self, screen, x, y):
@@ -18,7 +19,7 @@ class Client(Host):
                 request.color = (191, 128, 128)
                 request.protocol = "DNS Request"
                 request.source = self.IP
-                request.destination = "DNS"
+                request.destination = DNSIP()
                 request.request = self.corespondent
                 self.link.send(request, self)
                 self.timer = 250
@@ -36,14 +37,14 @@ class Client(Host):
         x = 40
         y = 470
         dy = 19
-        headerText = "Name Table for Host "+self.IP
+        headerText = "Name Table for Host "+str(self.IP)[:-3]
         if self.name:
             headerText += " ("+self.name+")"
         header = self.IPfont.render(headerText, 1, self.selectColor)
         self.screen.blit(header, (x, y))
 
         for name, IP in self.names.iteritems():
-            label = self.IPfont.render(name.ljust(8)+IP, 1, self.color)
+            label = self.IPfont.render(name.ljust(8)+str(IP)[:-3], 1, self.color)
             y += dy
             self.screen.blit(label, (x, y))
             

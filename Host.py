@@ -31,7 +31,7 @@ class Host(Device):
             self.drawTable()
             pygame.draw.circle(self.screen, self.selectColor, self.pos, self.radius+3) 
         pygame.draw.circle(self.screen, self.color, self.pos, self.radius) 
-        address = self.IPfont.render(self.IP, 1, self.color)
+        address = self.IPfont.render(str(self.IP)[:-3], 1, self.color)
         self.screen.blit(address, (self.pos[0] - 75, self.pos[1] + self.radius + 4)) 
         if self.name:
             name = self.font.render(self.name[0], 1, (0,0,0))
@@ -41,4 +41,4 @@ class Host(Device):
         pass
 
     def __repr__(self):
-        return "<%s instance at %s with IP %s>" % (self.__class__.__name__, id(self), self.IP)
+        return "<%s instance at %s with IP %s>" % (self.__class__.__name__, id(self), str(self.IP))

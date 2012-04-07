@@ -3,6 +3,7 @@ from pygame.locals import *
 from Packet import Packet
 from Router import Router
 from copy import copy
+from IP import DNSIP
 
 class DNS(Router):
     def __init__ (self, screen, x, y):
@@ -24,8 +25,8 @@ class DNS(Router):
                 packetCopy = copy(packet)
                 interface = self.interfaces[link]
                 packetCopy.source = interface
-                packetCopy.destination = interface[:-2]+"255"
-                packetCopy.payload["DNS"] = (0, link)
+                packetCopy.destination = interface.broadcast()
+                packetCopy.payload[DNSIP()] = (0, link)
                 link.send(packetCopy, self)
             self.timer = 250
         else:

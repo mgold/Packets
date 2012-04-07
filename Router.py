@@ -31,32 +31,33 @@ class Router(Device):
             packet.protocol = "OSPF"
             for link in self.links:
                 packetCopy = copy(packet)
-                for entry in self.table:
-                    if self.table[entry][1] != link: #poisoned reverse
+                for subnetIP in self.table:
+                    if self.table[subnetIP][1] != link: #poisoned reverse
                         interface = self.interfaces[link]
                         packetCopy.source = interface
-                        packetCopy.destination = interface[:-2]+"255"
-                        packetCopy.payload[entry] = (self.table[entry][0], link)
+                        packetCopy.destination = interface.broadcast()
+                        packetCopy.payload[subnetIP] = (self.table[subnetIP][0], link)
                 link.send(packetCopy, self)
             self.timer = 250
         else:
             self.timer -= 1
 
     def receive(self, packet):
-        if packet.destination[-3:] == "255":
+        if packet.destination.isBroadcast():
             self.broadcast(packet)
-        elif self.IP[:10] == packet.destination[:10]:
+        elif packet.destination in self.IP:
             self.sendLocal(packet)
-        elif packet.destination[:10] in self.table:
-            self.table[packet.destination[:10]][1].send(packet, self)
+        else:
+            for subnetIP in self.table:
+                if packet.destination in subnetIP:
+                    self.table[subnetIP][1].send(packet, self)
 
         if packet.protocol == "OSPF":
             pl = packet.payload
             weight = packet.link.weight
-            for entry in pl:
-                entry = entry[:10]
-                if entry not in self.table or pl[entry][0] + weight <= self.table[entry][0]:
-                    self.table[entry] = (pl[entry][0]+ weight, packet.link)
+            for subnetIP in pl:
+                if subnetIP not in self.table or pl[subnetIP][0] + weight <= self.table[subnetIP][0]:
+                    self.table[subnetIP] = (pl[subnetIP][0]+ weight, packet.link)
 
     def broadcast(self, packet):
         pass
@@ -82,7 +83,7 @@ class Router(Device):
 
     def drawIPs(self):
         for link, IP in self.interfaces.iteritems():
-            address = self.IPfont.render(IP, 1, self.color)
+            address = self.IPfont.render(str(IP)[:-3], 1, self.color)
             if link.d1 == self:
                 x,y = link.toPos2
             else:
@@ -119,20 +120,16 @@ class Router(Device):
         x = 40
         y = 470
         dy = 19
-        header = self.IPfont.render( "Routing Table for Router "+self.IP, 1, self.selectColor)
+        header = self.IPfont.render( "Routing Table for Router "+str(self.IP), 1, self.selectColor)
         self.screen.blit(header, (x, y))
         for link in self.links:
-            listing = self.interfaces[link] + "/32  0  localhost"
+            listing = str(self.interfaces[link]) + "  0  localhost"
             y += dy
             rendlisting = self.IPfont.render(listing, 1, self.color)
             self.screen.blit(rendlisting, (x, y))
         for IP, (weight, link) in self.table.iteritems():
-            if IP != "DNS":
-                IP += ".0/24"
-            else:
-                IP = "DNS            "
-            listing = IP.ljust(14) + str(weight).rjust(4)+"  "
-            listing += self.interfaces[link].ljust(16)
+            listing = str(IP).ljust(14) + str(weight).rjust(4)+"  "
+            listing += str(self.interfaces[link]).ljust(16)
             y += dy
             rendlisting = self.IPfont.render(listing, 1, self.color)
             self.screen.blit(rendlisting, (x, y))
@@ -142,12 +139,12 @@ class Router(Device):
 
 
     def __repr__(self):
-        return "<%s instance at %s with IP %s>" % (self.__class__.__name__, id(self), self.IP)
+        return "<%s instance at %s with IP %s>" % (self.__class__.__name__, id(self), str(self.IP))
 
     def __str__(self):
         listing = ""
         for IP, (weight, link) in self.table.iteritems():
-            listing += IP.ljust(16) + str(weight).rjust(4)+"  "
+            listing += str(IP).ljust(16) + str(weight).rjust(4)+"  "
             if link:
                 if link.d1 == self:
                     listing += link.d2.IP.ljust(16) + "\n"
@@ -155,5 +152,5 @@ class Router(Device):
                     listing += link.d1.IP.ljust(16) + "\n"
             else:
                 listing += "localhost\n"
-        return "Router "+self.IP+"\n" + listing
+        return "Router "+str(self.IP)+"\n" + listing
 

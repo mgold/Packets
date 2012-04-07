@@ -6,6 +6,7 @@ from Subnet import Subnet
 from DNS import DNS
 from Host import Host
 from Client import Client
+from IP import *
 
 """
 OSPF
@@ -18,7 +19,7 @@ side of a link).
 def OSPFmkDevice(screen, x, y, id):
     if id.isdigit():
         subnet = Subnet(screen, x, y)
-        subnet.IP = "192.168."+str(ord(list(id)[0]))+".0/24"
+        subnet.IP = IP(int(id))
         return subnet
     elif id == "N":
         dns = DNS(screen, x, y)
@@ -52,28 +53,21 @@ def OSPFconfigure(devices, links):
         for link in device.links:
             subnet = link.other(device)
             if isinstance(subnet, Subnet):
-                IP = subnet.IP[:-4]+device.IP
+                if not isinstance(device.IP, IP): 
+                    device.IP = IP(subnet.IP.subnet, int(device.IP))
                 if isinstance(device, Router):
-                    device.interfaces[link] = IP
-                    device.table[subnet.IP[:-5]] = (1, link)
-                                   #x.y.z -> (distance, link)    
+                    device.interfaces[link] = IP(subnet.IP.subnet, device.IP.suffix)
+                    device.table[subnet.IP] = (1, link)
+                elif isinstance(device, Host):
+                    device.link = device.links[0]
+                    assert(len(device.links)==1)
+                    if isinstance(device, Client):
+                        names[device.name] = device.IP
+                        device.names[device.name] = device.IP
             else:
                 print "Devices connected directly, rather than through a Subnet"
-            if len(device.links)==1:
-                device.IP = IP
-            if isinstance(device, Host):
-                if device.name:
-                    names[device.name] = device.IP
-                    device.names[device.name] = device.IP
                 
-    for device in filter(lambda d: not isinstance(d, Subnet), devices):
-        if len(device.IP) < 4:
-            device.IP = "192.168.*."+device.IP
-        if isinstance(device, Host):
-            host = device
-            host.link = host.links[0]
-            assert(len(host.links)==1)
-        if isinstance(device, DNS):
-            device.names = names
+    for dns in filter(lambda d: isinstance(d, DNS), devices):
+        dns.names = names
 
 packets(topology="OSPFtopology.txt", mkDevice=OSPFmkDevice, configure=OSPFconfigure)

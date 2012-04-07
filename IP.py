@@ -1,52 +1,80 @@
 class IP:
-    """Encapsulates an immutable IPv4 address or address block"""
+    """
+    IP - Encapsulates an immutable IPv4 address or address block
+    
+    I have made the simplifying restriction that all addresses take the form
+    192.168.xxx.yyy and the CIDR is either /24 or /32. That is, it's the class
+    system in CIDR notation.
+    """
 
-    def __init__(self, a, b, c, d, cidr=32, bcast=False):
+    def __init__(self, subnet, suffix=0):
+        assert(0 <= subnet <= 255)
+        assert(0 <= suffix <= 255)
 
-        self.address = self.humanReadable = self.hash =  ''
-        for byte in [a, b, c, d]:
-            assert(0 <= byte <= 255)
-            self.address += bin(byte)[2:].zfill(8)
-            self.humanReadable += str(byte) + '.'
-            self.hash += str(byte)
-        self.humanReadable = self.humanReadable[:-1] + '/' + str(cidr)
-        self.hash += str(cidr)
-        self.hash = int(self.hash)
-        self.address = int(self.address, 2)
+        self.subnet = subnet
+        self.suffix = suffix
+        self.address = int(str(subnet).zfill(3) + str(suffix).zfill(3))
 
-        assert(0 <= cidr <= 32)
-        self.cidr = cidr
-        self.mask = int('1' * self.cidr + '0' * (32 - self.cidr), 2)
-        self.bcast = bcast
-        if not bcast:
-            self.broadcastQuadruple = []
-            broadcastAddress = self.address | ~self.mask
-            for i in range(0, 32, 8):
-                byte = broadcastAddress << i
-                byte >>= 24
-                byte &= 255
-                self.broadcastQuadruple.append(byte)
+        if suffix == 0:
+            self.cidr = 24
+        else:
+            self.cidr = 32
 
     def broadcast(self):
-        if self.bcast:
-            return self
-        return IP(self.broadcastQuadruple[0], self.broadcastQuadruple[1],
-                  self.broadcastQuadruple[2], self.broadcastQuadruple[3], self.cidr, True)
+        return IP(self.subnet, 255)
+
+    def isBroadcast(self):
+        return self.suffix == 255
 
     def __contains__(self, otherIP):
-        return otherIP.address & self.mask == self.address & self.mask
+        return otherIP.subnet == self.subnet and self.cidr == 24
 
     def __cmp__(self, otherIP):
         return self.address.__cmp__(otherIP.address)
 
     def __eq__(self, otherIP):
-        return self.address == otherIP.address and self.cidr == otherIP.cidr
+        return self.address == otherIP.address
 
     def __hash__(self):
-        return self.hash
+        return self.address
 
     def __str__(self):
-        return self.humanReadable
+        return '192.168.'+str(self.subnet)+'.'+str(self.suffix)+'/'+str(self.cidr)
 
     def __repr__(self):
         return "<%s instance at %s with IP %s>" % (self.__class__.__name__, id(self), self.__str__())
+
+
+class DNSIP(IP):
+    """
+    DNS IP - A way to add "DNS" as an IP without cluttering the IP class.
+
+    Carries no informaion other than the fact that it is a DNS IP.
+    """
+
+    def __init__(self):
+        self.subnet = self.suffix = self.address = -1
+
+    def broadcast(self):
+        raise NotImplementedError
+
+    def isBroadcast(self):
+        return False
+
+    def __contains__(self, otherIP):
+        return isinstance(otherIP, DNSIP)
+
+    def __cmp__(self, otherIP):
+        raise NotImplementedError
+
+    def __eq__(self, otherIP):
+        return isinstance(otherIP, DNSIP)
+
+    def __hash__(self):
+        return 1111 #Homage to 1.1.1.1
+
+    def __str__(self):
+        return "DNS"
+
+    def __repr__(self):
+        return "<%s instance at %s>" % (self.__class__.__name__, id(self))
