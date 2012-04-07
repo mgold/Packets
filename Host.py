@@ -41,4 +41,4 @@ class Host(Device):
         pass
 
     def __repr__(self):
-        return "Host: "+self.IP
+        return "<%s instance at %s with IP %s>" % (self.__class__.__name__, id(self), self.IP)

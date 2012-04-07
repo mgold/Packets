@@ -51,7 +51,4 @@ class Client(Host):
         self.screen.blit(footer,  (x, y+dy))
        
     def __repr__(self):
-        toreturn = "Client: "+self.IP
-        if self.name:
-            toreturn += " ("+self.name+")"
-        return toreturn
+        return "<%s instance at %s with IP %s (%s)>" % (self.__class__.__name__, id(self), self.IP, self.name)

@@ -142,7 +142,7 @@ class Router(Device):
 
 
     def __repr__(self):
-        return "Router: "+self.IP
+        return "<%s instance at %s with IP %s>" % (self.__class__.__name__, id(self), self.IP)
 
     def __str__(self):
         listing = ""
