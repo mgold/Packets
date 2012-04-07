@@ -1,17 +1,22 @@
 class IP:
-    """Encapsulates an IPv4 address"""
+    """Encapsulates an immutable IPv4 address or address block"""
 
     def __init__(self, a, b, c, d, cidr=32):
         self.address = self.humanReadable = ''
         for byte in [a, b, c, d]:
             self.address += bin(byte)[2:].zfill(8)
-            self.humanReadable = byte + '.'
-        self.humanReadable += '/' + cidr
-        self.cidr = cidr
+            self.humanReadable += str(byte) + '.'
+        self.humanReadable = self.humanReadable[:-1] + '/' + str(cidr)
+        self.address = int(self.address, 2)
 
-    def inSubnet(self, otherIP):
-        mask = '1' * self.cidr
-        return otherIP.address & mask == self.address & mask
+        self.cidr = cidr
+        self.mask = int('1' * self.cidr + '0' * (32 - self.cidr), 2)
+
+    def __contains__(self, otherIP):
+        return otherIP.address & self.mask == self.address & self.mask
+
+    def __cmp__(self, otherIP):
+        return self.address.__cmp__(otherIP.address)
 
     def __str__(self):
         return self.humanReadable
