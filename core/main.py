@@ -8,7 +8,7 @@ Main - Core
 This is it: the main game loop. Configuration is done by calling packets() with
 custom arguments. This file can also be run directly to show the core in
 "vanilla" mode, using the default arguments. The most commonly overriden
-arguments are toplogy and mkDevice.
+arguments are toplogy and mkDevice. All arguments have sensible defaults.
 
 topology: a text file as described in loadLevel.py containing the physical and
 logical structure of the network.
@@ -18,11 +18,14 @@ mkDevice(screen, x, y, uniqueIdentifier): Must return a Device.
 mkLink(screen, uniqueID1, device1, uniqueID2, device2): Must return a Link.
 
 configure(devices, links): Called just before the main game loop begins. Acts
-by side effect, except that it returns a closure...
+by side effect, except that it returns a closure that is passed to...
 
 handleEvent(event, devices, closure): Handles pygame events. The closure is the
 returned value of configure, or None if no configure was supplied, on the first
 call. Should return a closure to be used on the next call.
+
+guard(devices): Used to terminate the game loop. Should return False if/when you
+want packets() to return. Default is the constant True function.
 
 """
 
@@ -30,7 +33,8 @@ def quit():
     pygame.quit()
     sys.exit()
 
-def packets(topology="topology.txt", mkDevice=None, mkLink=None, configure=None, handleEvent=lambda e, ds,c: c):
+def packets(topology="topology.txt", mkDevice=None, mkLink=None,
+configure=None, handleEvent=lambda e,ds,c: c, guard=lambda ds:True):
 
     if not os.path.isfile(topology) and os.path.isfile("core/"+topology):
         topology = "core/"+topology
@@ -38,13 +42,14 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None, configure=None,
     pygame.init()
 
     #Music
-    for music in "music.wav", "core/music.wav", "../core/music.wav":
-        try:
-            pygame.mixer.music.load(music)
-            pygame.mixer.music.play(-1)
-            break
-        except:
-            pass
+    if not pygame.mixer.music.get_busy():
+        for music in "music.wav", "core/music.wav", "../core/music.wav":
+            try:
+                pygame.mixer.music.load(music)
+                pygame.mixer.music.play(-1)
+                break
+            except:
+                pass
 
     #Screen
     WIDTH, HEIGHT = 1440, 900
@@ -66,7 +71,7 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None, configure=None,
         closure = None
 
     #game loop
-    while True:
+    while guard(devices):
         time_passed = clock.tick(FPS)
 
         #Handle events

@@ -24,6 +24,9 @@ class Computer(Device):
         self.timeToSend = 0
         self.maxTimeToSend = 3
 
+        self.queues = {} #Created by configure
+        self.forwardOn = None
+
     def update(self):
         if self.owner:
             if self.timeToNewPacket == 0:
@@ -33,12 +36,16 @@ class Computer(Device):
                 self.timeToNewPacket -= 1
 
             if self.timeToSend == 0:
-                for link, count in self.queues.iteritems():
-                    if count and self.count:
-                        link.send(self.packet(), self)
-                        if count != 999:
-                            self.queues[link] -= 1
+                if self.forwardOn:
+                    if self.count:
+                        self.forwardOn.send(self.packet(), self)
                         self.count -= 1
+                else:
+                    for link, count in self.queues.iteritems():
+                        if count and self.count:
+                            link.send(self.packet(), self)
+                            self.queues[link] -= 1
+                            self.count -= 1
                 self.timeToSend = self.maxTimeToSend
             else:
                 self.timeToSend -= 1
@@ -55,23 +62,16 @@ class Computer(Device):
         for link in self.links:
             if link.other(self) == target:
                 if self.selectLevel == 3:
-                    self.clearForwarding()
-                    self.queues[link] = 999
+                    self.forwardOn = link
                 else:
-                    if self.queues[link] == 999:
-                        self.queues[link] = 0
-                    self.queues[link] += int(self.selectLevel * self.count / 2)
+                    self.forwardOn = None
+                    self.queues[link] += int(self.selectLevel * self.count / 3)
 
     def packet(self):
         packet = Packet(self.screen, self.pos[0], self.pos[1])
         packet.color = self.color
         packet.owner = self.owner
         return packet
-
-    def clearForwarding(self):
-        for l, q  in self.queues.iteritems():
-            if q == 999:
-                self.queues[l] = 0
 
     def changeOwner(self, newOwner, count=0):
         self.count = count
@@ -94,4 +94,4 @@ class Computer(Device):
             self.screen.blit(counts, (self.pos[0] - 13, self.pos[1] - 10))
 
     def __repr__(self):
-        return "<%s instance at %s with %n %s packets.>" % (self.__class__.__name__, id(self), self.count, self.owner)
+        return "<%s instance at %s with %s %s packets>" % (self.__class__.__name__, id(self), str(self.count), self.owner)
