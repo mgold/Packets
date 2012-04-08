@@ -1,21 +1,15 @@
 PACKETS
 A network simulator by Max Goldstein
 
-Packets consists of a core and modules.  The core consists of:
-main.py (run this to see vanilla mode)
-Device.py
-Link.py
-Packet.py
-topology.txt
-loadLevel.py
-music.wav
+In theory, that's any network. The core does little more than draw cicles
+connected with lines and move rectangles along them. There are ways to extend
+the core (for example, to model specific protocols) by subclassing Device, using
+a different network topology, and passing functions to configure Device and Link
+objects. 
 
-Avoid modifying the core.
-
-There are ways to extend the core (for example, to model specific protocols) by
-subclassing Device, using a different network topology, and passing functions to
-configure Device and Link objects. See loadLevel.py for more documentation, or
-see OSPFmain.py and Router.py for an example.
+Currently, there's only one such extension, modeling mostly internet routing
+protocols. All of the associated files are in the top-level directory (Python
+packages wouldn't cooperate). The core files are in the directory core.
 
 Device class hierarchy
 

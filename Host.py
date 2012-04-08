@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
-from Packet import Packet
-from Device import Device
+from core.Device import Device
+from core.Packet import Packet
 from copy import copy
 
 class Host(Device):

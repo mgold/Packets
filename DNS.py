@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from Packet import Packet
+from core.Packet import Packet
 from Router import Router
 from copy import copy
 from IP import DNSIP
@@ -53,7 +53,7 @@ class DNS(Router):
         x = 40
         y = 470
         dy = 19
-        header = self.IPfont.render("Name Table for DNS "+self.IP, 1, self.selectColor)
+        header = self.IPfont.render("Name Table for DNS "+str(self.IP), 1, self.selectColor)
         self.screen.blit(header,  (x, y))
 
         for name, IP in self.names.iteritems():

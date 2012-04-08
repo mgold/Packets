@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from Packet import Packet
+from core.Packet import Packet
 from Router import Router
 from copy import copy
 

@@ -1,81 +1,75 @@
-import pygame, sys, os
+import pygame
 from pygame.locals import *
-from loadLevel import loadLevel
+from core.packets import packets
+from Router import Router
+from Subnet import Subnet
+from DNS import DNS
+from Host import Host
+from Client import Client
+from IP import *
 
-def quit():
-    pygame.quit()
-    sys.exit()
+"""
+Main
 
-def packets(topology="topology.txt", mkDevice=None, mkLink=None, configure=None):
+Run python on this file.
 
-    pygame.init()
+Routers send out packets exchanging distance vector information, building their
+routing tables. Note that IP addresses are associated with an interface (one
+side of a link).
+"""
 
-    #Music
-    try:
-        pygame.mixer.music.load("music.wav")
-        pygame.mixer.music.play(-1)
-    except:
-        pass
+def mkDevice(screen, x, y, id):
+    if id.isdigit():
+        subnet = Subnet(screen, x, y)
+        subnet.IP = IP(int(id))
+        return subnet
+    elif id == "N":
+        dns = DNS(screen, x, y)
+        dns.IP = str(ord(list(id)[0]))
+        return dns
+    elif id.isupper():
+        router = Router(screen, x, y)
+        router.IP = str(ord(list(id)[0]))
+        router.selected = router.IP == "66"
+        return router
+    elif id.islower():
+        if id == "h":
+            host = Client(screen, x, y)
+            host.name = "Alice"
+            host.corespondent = "Bob"
+        elif id == "x":
+            host = Client(screen, x, y)
+            host.name = "Bob"
+            host.corespondent = "Alice"
+        else:
+            host = Host(screen, x ,y)
+        host.IP = str(ord(list(id)[0]))
+        return host
+    else:
+        print "Unrecognized unique identifier in sprite map"
+        return None
 
-    #Screen
-    WIDTH, HEIGHT = 1440, 900
-    window = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
-    pygame.display.set_caption('Packets')
-    screen = pygame.display.get_surface() 
+def configure(devices, links):
+    names = {}
+    for device in filter(lambda d: not isinstance(d, Subnet), devices):
+        for link in device.links:
+            subnet = link.other(device)
+            if isinstance(subnet, Subnet):
+                if not isinstance(device.IP, IP): 
+                    device.IP = IP(subnet.IP.subnet, int(device.IP))
+                if isinstance(device, Router):
+                    device.interfaces[link] = IP(subnet.IP.subnet, device.IP.suffix)
+                    device.table[subnet.IP] = (1, link)
+                elif isinstance(device, Host):
+                    device.link = device.links[0]
+                    assert(len(device.links)==1)
+                    if isinstance(device, Client):
+                        names[device.name] = device.IP
+                        device.names[device.name] = device.IP
+            else:
+                print "Devices connected directly, rather than through a Subnet"
+                
+    for dns in filter(lambda d: isinstance(d, DNS), devices):
+        dns.names = names
 
-    #Clock
-    clock = pygame.time.Clock()
-    FPS = 50
-    time_passed = 0
-
-    #Read in a file to generate the sprites on a level
-    devices, links = loadLevel(topology, screen, mkDevice, mkLink)
-
-    if configure:
-        configure(devices, links)
-
-    try:
-        selectedDevice = filter (lambda d: d.selected, devices)[0]
-    except:
-        selectedDevice = None
-
-    #game loop
-    while True:
-        time_passed = clock.tick(FPS)
-
-        #Handle events
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit()
-            elif event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    quit()
-            elif event.type == MOUSEBUTTONDOWN:
-                for device in devices:
-                    if device.rect.collidepoint(event.pos) and device.selectable:
-                        if selectedDevice and selectedDevice == device:
-                            device.selected = False
-                            selectedDevice = None
-                        else:
-                            device.selected = True
-                            if selectedDevice:
-                                selectedDevice.selected = False
-                            selectedDevice = device
-
-        #Update
-        for device in devices:
-            device.update()
-        for link in links:
-            link.update()
-
-        #Draw
-        screen.fill((0,0,0))
-        for link in links:
-            link.draw()
-        for device in devices:
-            device.draw()
-
-        pygame.display.flip() 
-
-if __name__ == "__main__":
-    packets()
+packets(topology="network.txt", mkDevice=mkDevice, configure=configure)
