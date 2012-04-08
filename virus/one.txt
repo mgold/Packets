@@ -1,0 +1,40 @@
+
+
+
+
+                       C
+               B               D
+
+
+                       A                 f
+
+                    
+       b       c       g       d         e
+
+
+
+       a               W
+
+
+               X               Z
+                       Y
+
+(
+ab
+bc
+cA
+cW
+Ad
+Wd
+de
+ef
+cg
+Ag
+Wg
+dg
+AB
+AC
+AD
+WX
+WY
+WZ

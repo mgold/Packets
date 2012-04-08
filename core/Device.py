@@ -30,7 +30,10 @@ class Device(pygame.sprite.Sprite):
 
     def receive(self, packet):
         if randint(0, 3) != 1:
-            choice(filter(lambda l: l != packet.link, self.links)).send(packet, self)
+            try:
+                choice(filter(lambda l: l != packet.link, self.links)).send(packet, self)
+            except:
+                pass
 
     def draw(self):
         pygame.draw.circle(self.screen, self.color, self.pos, self.radius) 

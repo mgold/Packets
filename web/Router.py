@@ -124,7 +124,7 @@ class Router(Device):
         x = 40
         y = 470
         dy = 19
-        header = self.IPfont.render( "Routing Table for Router "+str(self.IP), 1, self.selectColor)
+        header = self.IPfont.render( "Routing Table for Router "+str(self.IP)[:-3], 1, self.selectColor)
         self.screen.blit(header, (x, y))
         for link in self.links:
             listing = str(self.interfaces[link]) + "  0  localhost"
@@ -133,7 +133,7 @@ class Router(Device):
             self.screen.blit(rendlisting, (x, y))
         for IP, (weight, link) in self.table.iteritems():
             listing = str(IP).ljust(14) + str(weight).rjust(4)+"  "
-            listing += str(self.interfaces[link]).ljust(16)
+            listing += str(self.interfaces[link])[:-3].ljust(16)
             y += dy
             rendlisting = self.IPfont.render(listing, 1, self.color)
             self.screen.blit(rendlisting, (x, y))

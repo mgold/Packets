@@ -53,11 +53,11 @@ class DNS(Router):
         x = 40
         y = 470
         dy = 19
-        header = self.IPfont.render("Name Table for DNS "+str(self.IP), 1, self.selectColor)
+        header = self.IPfont.render("Name Table for DNS@"+str(self.IP)[:-3], 1, self.selectColor)
         self.screen.blit(header,  (x, y))
 
         for name, IP in self.names.iteritems():
-            label = self.IPfont.render(name.ljust(8)+str(IP), 1, self.color)
+            label = self.IPfont.render(name.ljust(8)+str(IP)[:-3], 1, self.color)
             y += dy
             self.screen.blit(label, (x, y))
             

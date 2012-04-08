@@ -38,9 +38,7 @@ class Client(Host):
         x = 40
         y = 470
         dy = 19
-        headerText = "Name Table for Host "+str(self.IP)[:-3]
-        if self.name:
-            headerText += " ("+self.name+")"
+        headerText = "Name Table for "+self.name+"@"+str(self.IP)[:-3]
         header = self.IPfont.render(headerText, 1, self.selectColor)
         self.screen.blit(header, (x, y))
 
