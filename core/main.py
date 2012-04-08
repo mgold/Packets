@@ -3,10 +3,11 @@ from pygame.locals import *
 from loadLevel import loadLevel
 
 """
-Packets
+Main - Core
 
 This is it: the main game loop. Configuration is done by calling packets() with
-custom arguments.
+custom arguments. This file can also be run directly to show the core in
+"vanilla" mode. 
 """
 
 def quit():
@@ -29,7 +30,7 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None, configure=None)
             pygame.mixer.music.load("core/music.wav")
             pygame.mixer.music.play(-1)
         except:
-            pass
+            print sys.path
 
     #Screen
     WIDTH, HEIGHT = 1440, 900

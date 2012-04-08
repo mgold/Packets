@@ -5,7 +5,9 @@ from random import randint, choice
 
 class Device(pygame.sprite.Sprite):
     """
-    Device - superclass of hosts, routers, servers, etc.
+    Device - Core
+    
+    Superclass of hosts, routers, servers, etc.
     
     When no overriden by a subclass, sends packets at random and forwards or
     drops packets at random.

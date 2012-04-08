@@ -57,7 +57,7 @@ class DNS(Router):
         self.screen.blit(header,  (x, y))
 
         for name, IP in self.names.iteritems():
-            label = self.IPfont.render(name.ljust(8)+IP, 1, self.color)
+            label = self.IPfont.render(name.ljust(8)+str(IP), 1, self.color)
             y += dy
             self.screen.blit(label, (x, y))
             

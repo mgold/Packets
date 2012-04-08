@@ -1,6 +1,6 @@
-import pygame
+import pygame, os
 from pygame.locals import *
-from core.packets import packets
+from core.main import packets
 from Router import Router
 from Subnet import Subnet
 from DNS import DNS
@@ -9,13 +9,13 @@ from Client import Client
 from IP import *
 
 """
-Main
+Main - Web
 
-Run python on this file.
+Run python on this file to launch to web module, simulating the internet.
 
 Routers send out packets exchanging distance vector information, building their
 routing tables. Note that IP addresses are associated with an interface (one
-side of a link).
+side of a link). Alice and Bob contact the DNS server, and then each other.
 """
 
 def mkDevice(screen, x, y, id):
@@ -72,4 +72,14 @@ def configure(devices, links):
     for dns in filter(lambda d: isinstance(d, DNS), devices):
         dns.names = names
 
-packets(topology="network.txt", mkDevice=mkDevice, configure=configure)
+def main():
+    topology = "network.txt"
+
+    if not os.path.isfile(topology) and os.path.isfile("web/"+topology):
+        topology = "web/"+topology
+
+
+    packets(topology=topology, mkDevice=mkDevice, configure=configure)
+
+if __name__ == "__main__":
+    main()

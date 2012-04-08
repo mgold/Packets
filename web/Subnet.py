@@ -5,11 +5,14 @@ from Router import Router
 from copy import copy
 
 class Subnet(Router):
-    """Subnet
+    """
+    Subnet - Web
 
-    A dirty hack. Allows many-to-many join of routers, with the hopes of
-    assigning IPs to interfaces instead of devices.
-
+    Represents many-to-many joins of Links.
+    
+    Helps assign IP addresses to each interface, rather than each host. For
+    this reason, every Link in the Web module connects one Subnet to one
+    non-Subnet Device.
     """
 
     def __init__ (self, screen, x, y):

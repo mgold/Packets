@@ -5,8 +5,11 @@ from Link import Link
 
 def loadLevel(level_name, screen, mkDevice=None, mkLink=None):
     """
-    loadLevel - expects the name of a sprite map and the screen, and returns the
-    sprites for the level. This is how you extend the Packets core.
+    loadLevel - Core
+    
+    Expects the name of a sprite map and the screen, and returns the
+    sprites for the level. Extensions to the core are implemented almost
+    entirely by functions that take effect in this module.
     
     The sprite map is the name of a file, whose contents consist of spaces,
     newlines, and unique identifiers, followed by a list of pairs of unique

@@ -1,12 +1,13 @@
 class IP:
     """
-    IP - Encapsulates an immutable IPv4 address or address block
+    IP - Web
+    
+    Encapsulates an immutable IPv4 address or address block.
     
     I have made the simplifying restriction that all addresses take the form
     192.168.xxx.yyy and the CIDR is either /24 or /32. That is, it's the class
-    system in CIDR notation.
+    system in CIDR notation. It's not a very realistic assumption.
     """
-
     def __init__(self, subnet, suffix=0):
         assert(0 <= subnet <= 255)
         assert(0 <= suffix <= 255)
@@ -47,7 +48,9 @@ class IP:
 
 class DNSIP(IP):
     """
-    DNS IP - A way to add "DNS" as an IP without cluttering the IP class.
+    DNS IP - Web
+    
+    A way to add "DNS" as an IP without cluttering the IP class.
 
     Carries no informaion other than the fact that it is a DNS IP.
     """

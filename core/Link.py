@@ -4,7 +4,9 @@ from math import sin, cos, atan2, pi
 
 class Link(pygame.sprite.Sprite):
     """
-    Link - Moves Packets between Devices
+    Link - Core
+    
+    Moves Packets between Devices.
 
     Extention notes:
     Avoid subclassing if at all possible.
