@@ -12,17 +12,14 @@ there's only one module, web, modeling mostly internet routing protocols.
 Each module (and the core) has its own directory. By convention, the file to
 execute is called main.py. However, due to the way packages work, it is
 necessary to call main from the top level. File with the same names as the
-module they run are provided.
+module they run are provided there.
 
-Device class hierarchy
+Device class hierarchy:
 
-      pygame.sprite
-            |
-            V
-          Device
-            /\
-          /    \
-      Router  Host
-      /\        |
-    /    \      V
- Subnet  DNS   Client
+pygame.sprite
+    core.Device
+        web.Router
+            web.Subnet
+            web.DNS
+        web.Host
+            web.Client

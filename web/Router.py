@@ -12,6 +12,10 @@ class Router(Device):
         
         self.packetColor = (128, 255, 128)
 
+        self.selectColor = (191, 191, 191)
+        self.selectable = True
+        self.selected = False
+
         self.IPfont = pygame.font.SysFont(u'couriernew,courier', 18, bold=True)
         self.font = pygame.font.Font(None, 36)
 

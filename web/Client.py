@@ -11,6 +11,7 @@ class Client(Host):
         self.selectable = True        
         self.corespondent = self.name
         self.timer = 0
+        self.color = (64, 128, 223)
 
     def update(self):
         if self.corespondent not in self.names:

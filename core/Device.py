@@ -22,10 +22,6 @@ class Device(pygame.sprite.Sprite):
 
         self.color = (0, 128, 255) 
 
-        self.selectColor = (191, 191, 191)
-        self.selectable = True
-        self.selected = False
-
         self.links = [] #connected interfaces
 
     def update(self):

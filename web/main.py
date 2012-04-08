@@ -51,7 +51,10 @@ def mkDevice(screen, x, y, id):
 
 def configure(devices, links):
     names = {}
+    selected = None
     for device in filter(lambda d: not isinstance(d, Subnet), devices):
+        if device.selected:
+            selected = device
         for link in device.links:
             subnet = link.other(device)
             if isinstance(subnet, Subnet):
@@ -72,14 +75,29 @@ def configure(devices, links):
     for dns in filter(lambda d: isinstance(d, DNS), devices):
         dns.names = names
 
+    return selected
+   
+def handle(event, devices, selectedDevice):
+    if event.type == MOUSEBUTTONDOWN:
+        for device in devices:
+            if device.rect.collidepoint(event.pos) and device.selectable:
+                if selectedDevice and selectedDevice == device:
+                    device.selected = False
+                    return None
+                else:
+                    device.selected = True
+                    if selectedDevice:
+                        selectedDevice.selected = False
+                    return device
+    return selectedDevice
+
 def main():
     topology = "network.txt"
 
     if not os.path.isfile(topology) and os.path.isfile("web/"+topology):
         topology = "web/"+topology
 
-
-    packets(topology=topology, mkDevice=mkDevice, configure=configure)
+    packets(topology=topology, mkDevice=mkDevice, configure=configure, handleEvent=handle)
 
 if __name__ == "__main__":
     main()

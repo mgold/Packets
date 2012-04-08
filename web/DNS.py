@@ -68,4 +68,4 @@ class DNS(Router):
         self.screen.blit(self.font.render("DNS", 1, (0,0,0)), (self.pos[0] - self.radius + 2, self.pos[1] - 6))
 
     def __repr__(self):
-        return "DNS: "+self.IP
+        return "DNS: "+str(self.IP)

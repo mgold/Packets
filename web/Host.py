@@ -12,6 +12,10 @@ class Host(Device):
         self.color = (0, 96, 191) 
         self.packetColor = (128, 128, 191)
 
+        self.selectColor = (191, 191, 191)
+        self.selectable = False
+        self.selected = False
+
         #Similar to router
         self.font = pygame.font.Font(None, 28)
         self.IPfont = pygame.font.SysFont(u'couriernew,courier', 18, bold=True)

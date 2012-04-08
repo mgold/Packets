@@ -23,10 +23,6 @@ def loadLevel(level_name, screen, mkDevice=None, mkLink=None):
     of the network. The list of pairs of unique identifiers is an adjacency
     list, determining the logical layout of the network.
 
-    The optional function mkDevice must return a Device object (possibly a
-    subclass). Its signature is mkDevice(screen, x, y, uniqueIdentifier).
-    To customize Links, use mkLink(screen, id1, dev1, id2, dev2).
-
     Return type: a tuple of a list of Device objects and a list of Link objects.
     """
 
