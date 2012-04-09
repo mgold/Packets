@@ -6,8 +6,8 @@ class Packet(pygame.sprite.Sprite):
     Packet - Core
     
     Visual representation of data transfer, as well as a container for that
-    data.  Indeed, the time of arrival of a packet at its destination is not
-    precalculated by determined by the onscreen position of the sprite.
+    data. Indeed, the time of arrival of a packet at its destination is not
+    precalculated but determined by the onscreen position of the sprite.
 
     Extention notes:
     Avoid subclassing.

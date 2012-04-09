@@ -9,7 +9,7 @@ class Device(pygame.sprite.Sprite):
     
     Superclass of hosts, routers, servers, etc.
     
-    When no overriden by a subclass, sends packets at random and forwards or
+    When not overriden by a subclass, sends packets at random and forwards or
     drops packets at random.
 
     Subclassing note: treat self.links as read-only. 
