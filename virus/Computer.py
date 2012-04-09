@@ -8,6 +8,7 @@ class Computer(Device):
     def __init__ (self, screen, x, y, radius=20):
         Device.__init__(self, screen, x, y)
         self.radius = radius
+        self.rect = pygame.Rect(x-self.radius, y-self.radius, 2*self.radius, 2*self.radius)
 
         self.owner = None
         self.count = 0
@@ -90,8 +91,10 @@ class Computer(Device):
         counts  = self.font.render(str(self.count), 1, (0,0,0))
         if self.count < 10:
             self.screen.blit(counts, (self.pos[0] - 7, self.pos[1] - 10))
-        else:
+        elif self.count < 100:
             self.screen.blit(counts, (self.pos[0] - 13, self.pos[1] - 10))
+        else:
+            self.screen.blit(counts, (self.pos[0] - 20, self.pos[1] - 10))
 
     def __repr__(self):
         return "<%s instance at %s with %s %s packets>" % (self.__class__.__name__, id(self), str(self.count), self.owner)

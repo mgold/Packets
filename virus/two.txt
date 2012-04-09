@@ -1,40 +1,20 @@
 
 
 
+        A       B       C       D
 
-                       C
-               B               D
+   a                                 E
 
-
-                       A                 f
-
-                    
-       b       c       g       d         e
-
-
-
-       a               W
-
-
-               X               Z
-                       Y
+        b       c       d       e
 
 (
-ab
-bc
-cA
-cW
-Ad
-Wd
-de
-ef
-cg
-Ag
-Wg
-dg
+aA
 AB
-AC
-AD
-WX
-WY
-WZ
+BC
+CD
+DE
+Ee
+ed
+dc
+cb
+ba

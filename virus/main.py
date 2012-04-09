@@ -5,8 +5,12 @@ from Computer import Computer
 
 def mkComputer(screen, x, y, id):
     if id.isupper():
-        computer = Computer(screen, x, y, radius=30)
-        computer.count = 15
+        if id == "Z":
+            computer = Computer(screen, x, y, radius=60)
+            computer.count = 150
+        else:
+            computer = Computer(screen, x, y, radius=30)
+            computer.count = 15
     else:
         computer = Computer(screen, x, y, radius=15)
         computer.count = 5
@@ -44,7 +48,7 @@ def winningCondition(devices):
     return len([d for d in devices if d.owner != "RED"])
 
 def main():
-    levels = ["one.txt", "two.txt"]
+    levels = ["one.txt", "two.txt", "three.txt", "four.txt"]
 
     if not os.path.isfile(levels[0]) and os.path.isfile("virus/"+levels[0]):
         prefix = "virus/"
@@ -54,8 +58,6 @@ def main():
     for level in levels:
         packets(topology=prefix+level, mkDevice = mkComputer, handleEvent =
         handle, configure=config, guard=winningCondition)
-
-    
 
 if __name__ == "__main__":
     main()

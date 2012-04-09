@@ -1,0 +1,33 @@
+
+
+
+              c              d
+           b                    e
+        a                          f 
+                A           B
+
+
+
+                C           D
+        g                          l
+           h                    k
+              i              j
+
+
+(
+Aa
+Ab
+Ac
+Bd
+Be
+Bf
+Cg
+Ch
+Ci
+Dj
+Dk
+Dl
+AB
+AC
+CD
+DB

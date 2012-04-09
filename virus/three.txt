@@ -1,0 +1,36 @@
+
+
+
+
+
+
+
+                        A
+
+
+                b       B
+
+
+            a   c       C         Z
+
+
+                d       D
+
+
+                        E
+
+
+(
+ab
+ac
+ad
+bA
+bB
+cC
+dD
+dE
+AZ
+BZ
+CZ
+DZ
+EZ
