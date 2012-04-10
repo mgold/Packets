@@ -94,14 +94,14 @@ class Router(Device):
                 x,y = link.toPos1
             if y == 0:
                 if x < 0:
-                    x = -self.radius - 145
+                    x = -self.radius - 140
                     y = 4
                 else:
                     x = self.radius + 5
                     y = -20
             elif x == 0:
                 if y > 0:
-                    y = self.radius + 15
+                    y = self.radius + 3
                 else:
                     y = -self.radius - 25
                 x = -81
