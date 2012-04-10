@@ -98,8 +98,4 @@ class Link(pygame.sprite.Sprite):
                 packet.draw()
 
     def __repr__(self):
-<<<<<<< HEAD
         return "<%s instance at %s between %s and %s>" % (self.__class__.__name__, id(self), str(self.d1.IP), str(self.d2.IP))
-=======
-        return "<%s instance at %s between %s and %s>" % (self.__class__.__name__, id(self), str(self.d1.IP), str(self.d2.IP)))
->>>>>>> a49e5cdf655c3432fa75942b3f207a0f03265df4
