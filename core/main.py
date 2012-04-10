@@ -8,7 +8,9 @@ Main - Core
 This is it: the main game loop. Configuration is done by calling packets() with
 custom arguments. This file can also be run directly to show the core in
 "vanilla" mode, using the default arguments. The most commonly overriden
-arguments are toplogy and mkDevice. All arguments have sensible defaults.
+arguments are toplogy and mkDevice. Another way to extend the core is the
+closure, which can be any persistent data desired, and whose use is detailed
+below.
 
 topology: a text file as described in loadLevel.py containing the physical and
 logical structure of the network.
@@ -25,7 +27,8 @@ returned value of configure, or None if no configure was supplied, on the first
 call. Should return a closure to be used on the next call.
 
 guard(devices): Used to terminate the game loop. Should return False if/when you
-want packets() to return. Default is the constant True function.
+want packets() to return. Default is the constant True function. If the loop
+ever terminates, the closure is returned.
 
 """
 
@@ -98,6 +101,8 @@ configure=None, handleEvent=lambda e,ds,c: c, guard=lambda ds:True):
             device.draw()
 
         pygame.display.flip() 
+    
+    return closure
 
 if __name__ == "__main__":
     packets()
