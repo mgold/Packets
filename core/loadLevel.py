@@ -66,15 +66,17 @@ def links(screen, spriteMap, devices, mkLink):
             if d1:
                 d2 = devices[region]
                 if mkLink:
-                    link = mkLink(screen, id1, d1, d2, region)
+                    link = mkLink(screen, id1, d1, region, d2)
                 else:
                     link = Link(screen, d1, d2)
                 d1.links.append(link)
                 d2.links.append(link)
                 linkList.append(link)
                 d1 = None
+                id1 = None
             else:
                 d1 = devices[region]
+                id1 = region
     spriteMap.close()
     return devices.values(), linkList
 

@@ -1,0 +1,28 @@
+
+
+
+
+
+            
+            a           b           c
+
+
+
+            f           F           d
+
+
+
+            h           g           e
+
+(
+ab
+bc
+cd
+de
+eg
+gh
+hf
+Fb
+Fd
+Fg
+Ff

@@ -12,7 +12,7 @@
         b       c       d       e
 
 (
-aA
+Aa
 AB
 BC
 CD

@@ -2,6 +2,8 @@ import pygame, os
 from pygame.locals import *
 from core.main import packets
 from Computer import Computer
+from core.Link import Link
+from Firewall import Firewall
 
 def mkComputer(screen, x, y, id):
     if id.isupper():
@@ -18,6 +20,11 @@ def mkComputer(screen, x, y, id):
         computer.changeOwner("RED")
         computer.count = 10
     return computer
+
+def mkLink(screen, id1, device1, id2, device2):
+    if id1 == "F" and id2 != "f":
+        return Firewall(screen, device1, device2)
+    else: return Link(screen, device1, device2)
 
 
 def handle(event, devices, selectedDevice):
@@ -48,7 +55,7 @@ def winningCondition(devices):
     return len([d for d in devices if d.owner != "RED"])
 
 def main():
-    levels = ["one.txt", "two.txt", "three.txt", "four.txt"]
+    levels = ["one.txt", "two.txt", "three.txt", "four.txt", "five.txt"]
 
     if not os.path.isfile(levels[0]) and os.path.isfile("virus/"+levels[0]):
         prefix = "virus/"
@@ -57,7 +64,7 @@ def main():
 
     for level in levels:
         packets(topology=prefix+level, mkDevice = mkComputer, handleEvent =
-        handle, configure=config, guard=winningCondition)
+        handle, configure=config, guard=winningCondition, mkLink = mkLink)
 
 if __name__ == "__main__":
     main()
