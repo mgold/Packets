@@ -1,0 +1,39 @@
+
+
+
+
+    
+
+
+
+
+    A                          0    Y  
+
+      a      b      c      d      e
+
+
+      f      g      h      i      j
+       
+    B    1                          Z
+
+(
+B1
+1Z
+Y0
+0A
+AB
+YZ
+Aa
+ab
+bc
+cd
+de
+Ye
+Bf
+fg
+gh
+gi
+ij
+Zj
+bg
+di

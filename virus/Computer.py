@@ -14,8 +14,8 @@ class Computer(Device):
         self.count = 0
         self.color = (96, 96, 96) 
 
-        self.selectColors = [(0,0,0), (64, 64, 64), (128, 128, 128), (223, 223, 233)]
-        self.selectLevel = 0
+        self.selectColor = (223, 223, 233)
+        self.selected = False
 
         self.font = pygame.font.Font(None, 36)
 
@@ -25,7 +25,6 @@ class Computer(Device):
         self.timeToSend = 0
         self.maxTimeToSend = 3
 
-        self.queues = {} #Created by configure
         self.forwardOn = None
 
     def update(self):
@@ -41,32 +40,30 @@ class Computer(Device):
                     if self.count:
                         self.forwardOn.send(self.packet(), self)
                         self.count -= 1
-                else:
-                    for link, count in self.queues.iteritems():
-                        if count and self.count:
-                            link.send(self.packet(), self)
-                            self.queues[link] -= 1
-                            self.count -= 1
                 self.timeToSend = self.maxTimeToSend
             else:
                 self.timeToSend -= 1
+            
+            if self.owner == "GREEN":
+                for link in self.links:
+                    if link.other(self).owner != self.owner:
+                        self.attack(link.other(self))
+                        return
+
 
     def receive(self, packet):
         if self.owner and self.owner == packet.owner:
             self.count += 1
         else:
             self.count -= 1
-            if self.count == 0:
+            if self.count <= 0:
                 self.changeOwner(packet.owner)
+                self.forwardOn = None
 
     def attack(self, target):
         for link in self.links:
             if link.other(self) == target:
-                if self.selectLevel == 3:
-                    self.forwardOn = link
-                else:
-                    self.forwardOn = None
-                    self.queues[link] += int(self.selectLevel * self.count / 3)
+                self.forwardOn = link
 
     def packet(self):
         packet = Packet(self.screen, self.pos[0], self.pos[1])
@@ -79,12 +76,14 @@ class Computer(Device):
         self.owner = newOwner
         if newOwner == "RED":
             self.color = (255, 0, 0)
+            self.maxTimeToSend = 3
         else:
             self.color = (0, 255, 0)
+            self.maxTimeToSend = 4
 
     def draw(self):
-        if self.selectLevel:
-            pygame.draw.circle(self.screen, self.selectColors[self.selectLevel], self.pos, self.radius+5) 
+        if self.selected:
+            pygame.draw.circle(self.screen, self.selectColor, self.pos, self.radius+5) 
 
         pygame.draw.circle(self.screen, self.color, self.pos, self.radius) 
 

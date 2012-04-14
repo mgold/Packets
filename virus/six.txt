@@ -1,0 +1,37 @@
+
+
+
+
+
+
+
+
+                       f                G
+
+
+
+       b       c       A       d        e
+
+
+
+       a               g
+
+                       
+
+(
+ab
+bc
+cA
+Ad
+de
+eG
+cg
+cf
+df
+dg
+Ag
+Af
+ag
+ge
+Gf
+fb

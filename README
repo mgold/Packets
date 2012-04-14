@@ -21,6 +21,7 @@ Class hierarchy:
 
 pygame.sprite
     core.Link
+        virus.Firewall
     core.Packet
     core.Device
         web.Router
