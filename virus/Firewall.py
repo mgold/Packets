@@ -4,7 +4,15 @@ from core.Link import Link
 from math import atan2, degrees
 
 class Firewall(Link):
-    
+
+    """
+    Firewall - Virus
+
+    A subclass of link that disallows traffic whose owner is not the same as
+    the owner of constructor argument d1. Unlike Link, the order of the devices
+    matters. 
+    """
+
     def __init__ (self, screen, d1, d2, speed=5):
         Link.__init__(self, screen, d1, d2)
 

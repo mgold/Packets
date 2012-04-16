@@ -6,6 +6,14 @@ from core.Link import Link
 from Firewall import Firewall
 from time import sleep
 
+"""
+Main - Virus
+
+Defines functions passed in as arguments to packets(), defined in core/main;
+see there for documentation on the role of each. Then makes multiple calls in
+sequence.
+"""
+
 def mkComputer(screen, x, y, id):
     if id.isupper():
         if id == "Z":
