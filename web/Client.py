@@ -31,8 +31,20 @@ class Client(Host):
         if packet.protocol == "OSPF":
             pass
         elif packet.protocol == "DNS Response":
-            if packet.code != 404:
+            if packet.code != 404 and packet.response[0] not in self.names:
                 self.names[packet.response[0]] = packet.response[1] 
+                self.sendMail()
+        elif packet.protocol == "SMTP":
+            self.sendMail()
+
+    def sendMail(self):
+        mail = Packet(self.screen, self.pos[0], self.pos[1])
+        mail.color = self.color
+        mail.protocol = "SMTP"
+        mail.source = self.IP
+        mail.sender = self.name
+        mail.destination = self.names[self.corespondent]
+        self.link.send(mail, self)
 
     def drawTable(self):
         x = 40
