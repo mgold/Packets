@@ -40,7 +40,10 @@ class Text(Device):
 
 #Testing module
 if __name__ == "__main__":
-		
+	main()
+
+def main():
+
 	#Define Variables
 	FPS = 50
 	SCREEN_WIDTH, SCREEN_HEIGHT = 800,600
