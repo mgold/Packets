@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 from pygame.locals import *
 from core.Device import Device
 
@@ -15,7 +15,7 @@ class Text(Device):
 		self.y = y
 
 		self.font = pygame.font.SysFont(u'couriernew,courier', 18, bold=True)
-		self.color = (0, 128, 255) #Change if you like
+		self.color = (0, 192, 0) #Change if you like
 
 		#Store contents of text file in 'message'
 		with open(filename, 'r') as f:
@@ -23,20 +23,23 @@ class Text(Device):
 
 		self.current = 0 #Keeps track of which char we're on for slicing
 		
-		self.time_to_next_char = 0 #Spaces out printing of chars one by one
 		self.max_time_to_next_char = 5
+		self.time_to_next_char = self.max_time_to_next_char #Spaces out printing of chars one by one
+		
+		#print self.message
 		
     def update(self):
 		if self.time_to_next_char == 0:
 			self.current += 1
 			self.time_to_next_char = self.max_time_to_next_char
+			#print "Current = " + str(self.current)
 		else:
 			self.time_to_next_char -= 1
 
     def draw(self):
-    	to_print = self.message[:self.current] #Take what we have of the message so far...
-        self.screen.blit(to_print, (self.x,self.y)) #...and blit it to the screen
-
+		to_print = self.font.render(str(self.message[:self.current]), True, self.color) #Take what we have of the message so far...
+		self.screen.blit(to_print, (self.x,self.y)) #...and blit it to the screen
+		#print "Blitted!"
 
 #Testing module
 if __name__ == "__main__":
@@ -56,7 +59,7 @@ def main():
 	clock = pygame.time.Clock()
 
 	#Initialize Text instance
-	some_text = Text(screen, 10, 10, "nessage.txt")
+	some_text = Text(screen, 10, 10, "virus/message.txt")
 
 	#Main Loop
 	while True:
