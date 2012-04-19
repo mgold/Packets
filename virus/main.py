@@ -4,6 +4,7 @@ from core.main import packets
 from Computer import Computer
 from core.Link import Link
 from Firewall import Firewall
+from Text import Text
 from time import sleep
 
 """
@@ -19,6 +20,10 @@ def mkComputer(screen, x, y, id):
         if id == "Z":
             computer = Computer(screen, x, y, radius=60)
             computer.count = 150
+        elif id == "T":
+            text = Text(screen, x, y, "intro.txt")  
+            text.owner = "RED" #BAD! Kludge! Will break things later!
+            return text
         else:
             computer = Computer(screen, x, y, radius=30)
             computer.count = 15
