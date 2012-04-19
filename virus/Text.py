@@ -18,8 +18,13 @@ class Text(Device):
         self.color = (0, 192, 0) #Change if you like
 
         #Store contents of text file in 'message'
-        with open(filename, 'r') as f:
-            self.message = f.read()
+        for name in filename, "virus/"+filename:
+            try:
+                with open(name, 'r') as f:
+                    self.message = f.read()
+                break;
+            except:
+                pass
 
         self.current = 0 #Keeps track of which char we're on for slicing
         
@@ -59,7 +64,7 @@ def main():
     clock = pygame.time.Clock()
 
     #Initialize Text instance
-    some_text = Text(screen, 10, 10, "virus/message.txt")
+    some_text = Text(screen, 10, 10, "message.txt")
 
     #Main Loop
     while True:
