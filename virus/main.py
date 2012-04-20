@@ -94,14 +94,20 @@ def main():
     else:
         prefix = ""
 
+    #Screen
+    WIDTH, HEIGHT = 768, 1024
+    window = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption('Virus for Android')
+    screen = pygame.display.get_surface() 
+
     for level in levels:
         packets(topology=prefix+level, mkDevice = mkComputer, handleEvent =
-        handle, guard=winningCondition, mkLink = mkLink)
+        handle, guard=winningCondition, mkLink = mkLink, screen = screen)
         sleep(.75)
 
     for arena in arenas:
         packets(topology=prefix+arena, mkDevice = mkComputerArena, handleEvent =
-        handle, guard=arenaWin, mkLink = mkLinkArena)
+        handle, guard=arenaWin, mkLink = mkLinkArena, screen = screen)
         sleep(.75)
 
 if __name__ == "__main__":

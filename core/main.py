@@ -30,6 +30,9 @@ guard(devices): Used to terminate the game loop. Should return False if/when you
 want packets() to return. Default is the constant True function. If the loop
 ever terminates, the closure is returned.
 
+screen: a Surface object obtained by calling pygame.display.get_surface().
+Allows custom screen sizes.
+
 """
 
 def quit():
@@ -37,7 +40,7 @@ def quit():
     sys.exit()
 
 def packets(topology="topology.txt", mkDevice=None, mkLink=None,
-configure=None, handleEvent=lambda e,ds,c: c, guard=lambda ds:True):
+configure=None, handleEvent=lambda e,ds,c: c, guard=lambda ds:True, screen=None):
 
     if not os.path.isfile(topology) and os.path.isfile("core/"+topology):
         topology = "core/"+topology
@@ -55,10 +58,11 @@ configure=None, handleEvent=lambda e,ds,c: c, guard=lambda ds:True):
                 pass
 
     #Screen
-    WIDTH, HEIGHT = 1440, 900
-    window = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
-    pygame.display.set_caption('Packets')
-    screen = pygame.display.get_surface() 
+    if not screen:
+        WIDTH, HEIGHT = 1440, 900
+        window = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
+        pygame.display.set_caption('Packets')
+        screen = pygame.display.get_surface() 
 
     #Clock
     clock = pygame.time.Clock()
