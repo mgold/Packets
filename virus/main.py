@@ -67,7 +67,7 @@ def mkLinkArena(screen, id1, device1, id2, device2):
 def handle(event, devices, selectedDevice):
     if event.type == MOUSEBUTTONDOWN:
         for device in devices:
-            if device.rect.collidepoint(event.pos):
+            if not isinstance(device, Text) and device.rect.collidepoint(event.pos):
                 if selectedDevice:
                     if selectedDevice != device:
                         selectedDevice.attack(device)
@@ -95,19 +95,27 @@ def main():
         prefix = ""
 
     #Screen
-    WIDTH, HEIGHT = 768, 1024
+    WIDTH, HEIGHT = 1024, 768
     window = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption('Virus for Android')
     screen = pygame.display.get_surface() 
 
     for level in levels:
-        packets(topology=prefix+level, mkDevice = mkComputer, handleEvent =
-        handle, guard=winningCondition, mkLink = mkLink, screen = screen)
+        packets(topology=prefix+level, 
+                mkDevice = mkComputer, 
+                handleEvent = handle, 
+                guard=winningCondition, 
+                mkLink = mkLink, 
+                screen = screen)
         sleep(.75)
 
     for arena in arenas:
-        packets(topology=prefix+arena, mkDevice = mkComputerArena, handleEvent =
-        handle, guard=arenaWin, mkLink = mkLinkArena, screen = screen)
+        packets(topology=prefix+arena, 
+            mkDevice = mkComputerArena, 
+            handleEvent = handle,
+            guard=arenaWin,
+            mkLink = mkLinkArena,
+            screen = screen)
         sleep(.75)
 
 if __name__ == "__main__":

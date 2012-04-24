@@ -40,7 +40,8 @@ def quit():
     sys.exit()
 
 def packets(topology="topology.txt", mkDevice=None, mkLink=None,
-configure=None, handleEvent=lambda e,ds,c: c, guard=lambda ds:True, screen=None):
+    configure=None, screen = None,
+    handleEvent=lambda event, devices, closure: closure, guard=lambda ds:True):
 
     if not os.path.isfile(topology) and os.path.isfile("core/"+topology):
         topology = "core/"+topology

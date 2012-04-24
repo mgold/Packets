@@ -30,7 +30,7 @@ def loadLevel(level_name, screen, mkDevice=None, mkLink=None):
 
     col = row = 0
     GRANULARITY = 30
-    
+
     spriteMap = open(level_name)
     region = spriteMap.read(1)
     while region != "":
