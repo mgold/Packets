@@ -5,19 +5,19 @@
 
 
 
-                        A
+                   A
 
 
-                b       B
+           b       B
 
 
-            a   c       C         Z
+       a   c       C         Z
 
 
-                d       D
+           d       D
 
 
-                        E
+                   E
 
 
 (

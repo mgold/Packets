@@ -56,7 +56,7 @@ class Computer(Device):
             self.count += 1
         else:
             self.count -= 1
-            if self.count <= 0:
+            if self.count < 0:
                 self.changeOwner(packet.owner)
                 self.forwardOn = None
 
@@ -64,6 +64,10 @@ class Computer(Device):
         for link in self.links:
             if link.other(self) == target:
                 self.forwardOn = link
+                if (target.owner == self.owner
+                    and target.forwardOn 
+                    and target.forwardOn.other(target) == self): 
+                    target.forwardOn = None #Prevent forwarding loops
 
     def packet(self):
         packet = Packet(self.screen, self.pos[0], self.pos[1])

@@ -2,22 +2,22 @@
 
 
 
-                       C
-               B               D
+                     C
+             B               D
 
 
-                       A                f
+                     A                f
 
                     
-       b       c       g       d        e
+     b       c       g       d        e
 
 
 
-       a               W
+     a               W
 
 
-               X               Q
-                       Y
+             X               Q
+                     Y
 
 (
 ab
