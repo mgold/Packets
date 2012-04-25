@@ -1,27 +1,18 @@
 
 
 
+    A  B  C 
 
+ a            D
 
-
-
-
-
-
-     A       B       C       D
-
-  a                             E
-
-     b       c       d       e
+    b  c  d
 
 (
 Aa
 AB
 BC
 CD
-DE
-Ee
-ed
+Dd
 dc
 cb
 ba
