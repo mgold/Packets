@@ -28,7 +28,7 @@ class Text(Device):
 
         self.current = 0 #Keeps track of which char we're on for slicing
         
-        self.max_time_to_next_char = 5
+        self.max_time_to_next_char = 3
         self.time_to_next_char = self.max_time_to_next_char #Spaces out printing of chars one by one
         
         #print self.message
