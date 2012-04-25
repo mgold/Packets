@@ -20,10 +20,6 @@ def mkComputer(screen, x, y, id):
         if id == "Z":
             computer = Computer(screen, x, y, radius=60)
             computer.count = 150
-        elif id == "T":
-            text = Text(screen, x, y, "intro.txt")  
-            text.owner = "RED" #BAD! Kludge! Will break things later!
-            return text
         else:
             computer = Computer(screen, x, y, radius=30)
             computer.count = 15
@@ -84,6 +80,36 @@ def winningCondition(devices):
 def arenaWin(devices):
      return len([d for d in devices if d.owner == "RED"]) and len([d for d in devices if d.owner == "GREEN"])
 
+def textScreen(screen, filename):
+    text = Text(screen, 10, 10, filename)
+    textLen = len(text.message)
+    #Assumption of coupling: text.message does not change, and accesses text.current
+
+    clock = pygame.time.Clock()
+    FPS = 50
+    time_passed = 0
+
+    while True:
+        time_passed = clock.tick(FPS)
+
+        #Handle events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit()
+            elif event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    quit()
+            elif event.type == MOUSEBUTTONDOWN:
+                if text.current < textLen:
+                    text.current = textLen
+                else:
+                    return
+    
+        text.update()
+        screen.fill((0,0,0))
+        text.draw()
+        pygame.display.flip() 
+
 def main():
     levels = ["one.txt", "two.txt", "three.txt", "four.txt", "five.txt"]
 
@@ -94,11 +120,17 @@ def main():
     else:
         prefix = ""
 
+    pygame.init()
+
     #Screen
     WIDTH, HEIGHT = 480, 320
     window = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption('Virus for Android')
     screen = pygame.display.get_surface() 
+
+    #Todo: start playing music...
+
+    textScreen(screen, "intro.txt")    
 
     for level in levels:
         packets(topology=prefix+level, 
