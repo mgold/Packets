@@ -95,7 +95,7 @@ def main():
         prefix = ""
 
     #Screen
-    WIDTH, HEIGHT = 1024, 768
+    WIDTH, HEIGHT = 480, 320
     window = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption('Virus for Android')
     screen = pygame.display.get_surface() 
