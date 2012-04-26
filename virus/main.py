@@ -83,7 +83,7 @@ def arenaWin(devices):
 def textScreen(screen, filename):
     text = Text(screen, 10, 10, filename)
     textLen = len(text.message)
-    #Assumption of coupling: text.message does not change, and accesses text.current
+    #Assumptions of coupling: text.message does not change, and accesses/mutates text.current
 
     clock = pygame.time.Clock()
     FPS = 50
@@ -128,7 +128,11 @@ def main():
     pygame.display.set_caption('Virus for Android')
     screen = pygame.display.get_surface() 
 
-    #Todo: start playing music...
+    try:
+        pygame.mixer.music.load( "../core/music.wav")
+        pygame.mixer.music.play(-1)
+    except:
+        pass
 
     textScreen(screen, "intro.txt")    
 
