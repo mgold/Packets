@@ -1,5 +1,6 @@
 PACKETS
 A network simulator by Max Goldstein
+http://mgold.github.com/Packets/
 
 In theory, that's any network. Packets is divided into a core and modules. The
 core does little more than draw cicles connected with lines and move rectangles
