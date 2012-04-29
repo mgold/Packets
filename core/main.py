@@ -55,7 +55,7 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None,
                 pygame.mixer.music.load(music)
                 pygame.mixer.music.play(-1)
                 break
-            except:
+            except Exception:
                 pass
 
     #Screen

@@ -23,7 +23,7 @@ class Text(Device):
                 with open(name, 'r') as f:
                     self.message = f.read()
                 break;
-            except:
+            except Exception:
                 pass
 
         self.current = 0 #Keeps track of which char we're on for slicing

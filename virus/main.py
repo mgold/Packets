@@ -67,9 +67,15 @@ def handle(event, devices, selectedDevice):
                 if selectedDevice:
                     if selectedDevice != device:
                         selectedDevice.attack(device)
+                    try:
+                        pygame.mixer.Sound("deselect.wav").play()
+                    except Exception: pass
                     selectedDevice.selected = False
                     return None
                 elif device.owner == "RED":
+                    try:
+                        pygame.mixer.Sound("select.wav").play()
+                    except Exception: pass
                     device.selected = 1
                     return device
     return selectedDevice
@@ -131,8 +137,9 @@ def main():
     try:
         pygame.mixer.music.load( "../core/music.wav")
         pygame.mixer.music.play(-1)
-    except:
-        pass
+        winsound = pygame.mixer.Sound("winlevel.wav")
+    except Exception:
+        winsound = None
 
     textScreen(screen, "intro.txt")    
 
@@ -143,6 +150,8 @@ def main():
                 guard=winningCondition, 
                 mkLink = mkLink, 
                 screen = screen)
+        if winsound:
+            winsound.play()
         sleep(.75)
 
     for arena in arenas:
@@ -152,6 +161,8 @@ def main():
             guard=arenaWin,
             mkLink = mkLinkArena,
             screen = screen)
+        if winsound:
+            winsound.play()
         sleep(.75)
 
 if __name__ == "__main__":

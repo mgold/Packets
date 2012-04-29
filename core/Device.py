@@ -32,7 +32,7 @@ class Device(pygame.sprite.Sprite):
         if randint(0, 3) != 1:
             try:
                 choice(filter(lambda l: l != packet.link, self.links)).send(packet, self)
-            except:
+            except Exception:
                 pass
 
     def draw(self):
