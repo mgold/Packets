@@ -20,11 +20,12 @@ class Text(Device):
         self.offset = 15 #Increment the y value to print a new line of text
 
         #Store contents of text file in 'message'
+        self.message = ""
         for name in filename, "virus/"+filename:
             try:
                 with open(name, 'r') as f:
                     self.message = f.read()
-                break;
+                break
             except Exception:
                 pass
 
