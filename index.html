@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-    <title>Packets by evazorro</title>
+    <title>Packets for Android</title>
   </head>
 
   <body>
@@ -17,8 +17,7 @@
       <div class="container">
         <h1>Packets</h1>
         <h2>A network simulator</h2>
-        <a href="http://mgold.github.com/Packets/downloads.html" class="btn">Download the game</a>
-
+        <a href="http://mgold.github.com/Packets/downloads.html" class="btn">Go to the downloads page</a>
       </div>
     </header>
 
@@ -26,29 +25,36 @@
       <section id="main_content">
 
       	<p><h1>Story</h1>
-        <p>Text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text</p>
+        	Packets is a mobile game for Android devices. You play as a sentient virus, seeking to self-replicate and pass packets of itself to other computers, ultimately taking over the network.
+        </p>
 
-      	<p><h1>Features</h1></p>
+      	<p><h1>Instructions</h1>
 
-      	<p><h3>Category</h3></p>
-      		<ul>
-				<li>Item 1</li>
-				<li>Item 2</li>	
-	      	</ul>
-      	<p><h3>Category 2</h3><br>
-      		<ul>
-				<li>Item 1</li>
-				<li>Item 2</li>	
-	      	</ul>
+      	<p><h3>Overview</h3>
+			The network is visualized as a series of circular nodes connected by straight lines. Red nodes are “infected” -- these are nodes that you control. Gray nodes are nodes yet to be conquered. Each node has a number, printed in the center of its circle. As you send packets from one of your infected nodes to a linked uninfected node, the uninfected node’s number decreases with each packet you send. Once the uninfected node’s number reaches zero, you can move into the node, and it will begin to produce packets for you at regular intervals.
+		</p>
+
+      	<p><h3>To play</h3>
+			Click on a node that you control, then click on a gray node that you wish to attack (this node must be connected to the first node by a link -- depicted as a straight line). The first node will now send any packets it receives or produces to attack that node. It will continue to do so unless you tell it to do otherwise (e.g. click on it again and then click on a different linked node). When you have taken over a node, you can direct that node to send packets to other nodes in turn. All infected nodes produce new packets at specific intervals, so make sure you set all nodes to send their packets somewhere (if not they’ll just accumulate in the node). The number in a red, infected node tells you how many packets that node contains at a given time.
 		</p>      	
       	
+      	<p><h3>Win conditions</h3>
+      		To beat a level, infect all nodes. To beat the game, beat all 7 levels.
+      	</p>
+      	
+      	<p><h1>Technical details</h1>
+      		Packets was written in Python using Pygame, and ported to the Android platform using the <a href="http://pygame.renpy.org/">Pygame Subset for Android.</a>			
+      	</p>
+      	
+      	<p><h1>Credits</h1>
+      		Packets was created for Ming Chow's Game Development course (COMP 50-GD) at Tufts University. It is based on an original concept by Max Goldstein and was implemented by Max Goldstein and Eva Parish.
+      	</p>
+      	
       	<p><h1>Download the game</h1>
-        <a href="https://github.com/evazorro/Packets/zipball/master" class="btn">Download as .zip</a>
-        <a href="https://github.com/evazorro/Packets/tarball/master" class="btn">Download as .tar.gz</a>
-        <a href="https://github.com/evazorro/Packets" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+			<a href="https://github.com/evazorro/Packets/zipball/master" class="btn">Download as .zip</a>
+			<a href="https://github.com/evazorro/Packets/tarball/master" class="btn">Download as .tar.gz</a>
+			<a href="https://github.com/evazorro/Packets" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
 		</p>
-		
-		
 		
       </section>
     </div>
