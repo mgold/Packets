@@ -15,6 +15,12 @@ see there for documentation on the role of each. Then makes multiple calls in
 sequence.
 """
 
+def loadSound(filename):
+    """ pygame.mixer.sound(filename) will fail silently - wtf? """
+    if not os.path.isfile(filename):
+        raise pygame.error("Sound "+filename+" does not exist.")
+    return pygame.mixer.Sound(filename)
+
 def mkComputer(screen, x, y, id):
     if id.isupper():
         if id == "Z":
@@ -68,13 +74,13 @@ def handle(event, devices, selectedDevice):
                     if selectedDevice != device:
                         selectedDevice.attack(device)
                     try:
-                        pygame.mixer.Sound("deselect.wav").play()
+                        loadSound("deselect.wav").play()
                     except Exception: pass
                     selectedDevice.selected = False
                     return None
                 elif device.owner == "RED":
                     try:
-                        pygame.mixer.Sound("select.wav").play()
+                        loadSound("select.wav").play()
                     except Exception: pass
                     device.selected = 1
                     return device
@@ -134,14 +140,15 @@ def main():
     pygame.display.set_caption('Virus for Android')
     screen = pygame.display.get_surface() 
 
+    #Music
     try:
         pygame.mixer.music.load( "../core/music.wav")
         pygame.mixer.music.play(-1)
-        winsound = pygame.mixer.Sound("winlevel.wav")
+        winsound = loadSound("winlevel.wav")
     except Exception:
         winsound = None
 
-    textScreen(screen, "intro.txt")    
+    textScreen(screen, "intro.txt")   
 
     for level in levels:
         packets(topology=prefix+level, 
