@@ -17,9 +17,11 @@ sequence.
 
 def loadSound(filename):
     """ pygame.mixer.sound(filename) will fail silently - wtf? """
-    if not os.path.isfile(filename):
-        raise pygame.error("Sound "+filename+" does not exist.")
-    return pygame.mixer.Sound(filename)
+    if os.path.isfile(filename):
+        return pygame.mixer.Sound(filename)
+    if os.path.isfile('virus/'+filename):
+        return pygame.mixer.Sound('virus/'+filename)
+    raise pygame.error("Sound "+filename+" does not exist.")
 
 def mkComputer(screen, x, y, id):
     if id.isupper():
@@ -146,7 +148,12 @@ def main():
         pygame.mixer.music.play(-1)
         winsound = loadSound("winlevel.wav")
     except Exception:
-        winsound = None
+        try:
+            pygame.mixer.music.load( "core/music.wav")
+            pygame.mixer.music.play(-1)
+            winsound = loadSound("virus/winlevel.wav")
+        except Exception:
+            winsound = None
 
     textScreen(screen, "intro.txt")   
 
