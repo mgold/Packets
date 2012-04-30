@@ -16,6 +16,8 @@ class Text(Device):
 
         self.font = pygame.font.SysFont(u'couriernew,courier', 18, bold=True)
         self.color = (0, 192, 0) #Change if you like
+        self.num_chars_per_line = 35
+        self.offset = 15 #Increment the y value to print a new line of text
 
         #Store contents of text file in 'message'
         for name in filename, "virus/"+filename:
@@ -42,9 +44,17 @@ class Text(Device):
             self.time_to_next_char -= 1
 
     def draw(self):
-        to_print = self.font.render(str(self.message[:self.current]), True, self.color) #Take what we have of the message so far...
-        self.screen.blit(to_print, (self.x,self.y)) #...and blit it to the screen
-        #print "Blitted!"
+		if self.current > self.num_chars_per_line:
+			num_lines = self.current / self.num_chars_per_line # Calculate number of lines that will be needed to print the message
+			if self.current % self.num_chars_per_line > 0:
+				num_lines += 1
+			for line in range(num_lines): # Iterate through that number of lines
+				for char in range(self.num_chars_per_line):
+					to_print = self.font.render(str(self.message[(line*self.num_chars_per_line):(line*self.num_chars_per_line + char)]), True, self.color) # For each line, print the right segment of the message
+					self.screen.blit(to_print, (self.x,self.y+(self.offset*line))) # At y+(line # * 5) or whatever increment
+		else:
+			to_print = self.font.render(str(self.message[:self.current]), True, self.color) #Take what we have of the message so far...
+			self.screen.blit(to_print, (self.x,self.y)) #...and blit it to the screen
 
 #Testing module
 if __name__ == "__main__":
