@@ -1,13 +1,13 @@
 
+            A
+    b
+         B
 
-       A
+ a  c  C     Z
 
-    b      B
-
- a  c     C  Z
-
-    d      D
-       E
+         D
+    d
+            E
 
 
 (
