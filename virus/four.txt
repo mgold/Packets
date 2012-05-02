@@ -1,23 +1,13 @@
 
+    B       D
 
+        A     f
 
+  b  c  g  d  e
 
-                     C
-             B               D
+  a     W
 
-
-                     A                f
-
-                    
-     b       c       g       d        e
-
-
-
-     a               W
-
-
-             X               Q
-                     Y
+    X       Q
 
 (
 ab
@@ -33,8 +23,6 @@ Ag
 Wg
 dg
 AB
-AC
 AD
 WX
-WY
 WQ
