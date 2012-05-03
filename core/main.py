@@ -48,16 +48,6 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None,
 
     pygame.init()
 
-    #Music
-    if not pygame.mixer.music.get_busy():
-        for music in "music.wav", "core/music.wav", "../core/music.wav":
-            try:
-                pygame.mixer.music.load(music)
-                pygame.mixer.music.play(-1)
-                break
-            except Exception:
-                pass
-
     #Screen
     if not screen:
         WIDTH, HEIGHT = 1440, 900
