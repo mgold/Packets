@@ -1,6 +1,10 @@
 import pygame, sys, os
 from pygame.locals import *
 from loadLevel import loadLevel
+try:
+    import android
+except ImportError:
+    android = None
 
 """
 Main - Core
@@ -71,6 +75,10 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None,
     #game loop
     while guard(devices):
         time_passed = clock.tick(FPS)
+
+        if android:
+            if android.check_pause():
+                android.wait_for_resume()
 
         #Handle events
         for event in pygame.event.get():

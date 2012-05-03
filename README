@@ -1,34 +1,8 @@
-PACKETS
-A network simulator by Max Goldstein
+Virus for Android
+
+A separate branch for Android optimization using Pygame Subset for Android. If
+it actually works, we're surprised and pleased. If the code makes any sense,
+even more so.
+
+Website:
 http://mgold.github.com/Packets/
-
-In theory, that's any network. Packets is divided into a core and modules. The
-core does little more than draw cicles connected with lines and move rectangles
-along them. There are ways to extend the core (for example, to model specific
-protocols) by subclassing Device, using a different network topology, and
-passing functions to configure Device and Link objects. A collection of
-extensions is a module (not to be confused with the Python meaning). 
-
-Web is a fairly realistic and detailed model of internet routing
-protocols. Virus is game whose objective is to spread a virus across the
-network. Both of these are in fairly early development.
-
-Each module (and the core) has its own directory. By convention, the file to
-execute is called main.py. However, due to the way packages work, it is
-necessary to call main from the top level. File with the same names as the
-module they run are provided there.
-
-Class hierarchy:
-
-pygame.sprite
-    core.Link
-        virus.Firewall
-    core.Packet
-    core.Device
-        web.Router
-            web.Subnet
-            web.DNS
-        web.Host
-            web.Client
-        virus.Computer
-        virus.Text

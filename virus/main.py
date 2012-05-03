@@ -1,5 +1,9 @@
 import pygame, os
 from pygame.locals import *
+try:
+    import pygame.mixer as mixer
+except ImportError:
+    import android_mixer as mixer
 from core.main import packets
 from Computer import Computer
 from core.Link import Link
@@ -18,9 +22,9 @@ sequence.
 def loadSound(filename):
     """ pygame.mixer.sound(filename) will fail silently - wtf? """
     if os.path.isfile(filename):
-        return pygame.mixer.Sound(filename)
+        return mixer.Sound(filename)
     if os.path.isfile('virus/'+filename):
-        return pygame.mixer.Sound('virus/'+filename)
+        return mixer.Sound('virus/'+filename)
     raise pygame.error("Sound "+filename+" does not exist.")
 
 def mkComputer(screen, x, y, id):
@@ -144,13 +148,13 @@ def main():
 
     #Music
     try:
-        pygame.mixer.music.load( "../core/music.wav")
-        pygame.mixer.music.play(-1)
+        mixer.music.load( "../core/music.wav")
+        mixer.music.play(-1)
         winsound = loadSound("winlevel.wav")
     except Exception:
         try:
-            pygame.mixer.music.load( "core/music.wav")
-            pygame.mixer.music.play(-1)
+            mixer.music.load( "core/music.wav")
+            mixer.music.play(-1)
             winsound = loadSound("virus/winlevel.wav")
         except Exception:
             winsound = None
