@@ -128,9 +128,12 @@ def textScreen(screen, filename):
         pygame.display.flip() 
 
 def main():
-    levels = ["giveandtake.txt", "two.txt", "three.txt", "four.txt", "five.txt"]
+<<<<<<< HEAD
+    levels = ["one.txt", "two.txt", "three.txt", "four.txt", "five.txt"]
 
     arenas = ["six.txt", "arena.txt", "giveandtake.txt"]
+=======
+>>>>>>> 0868a2c3f74062bc7773fdc567b0c76262715242
 
     if not os.path.isfile(levels[0]) and os.path.isfile("virus/"+levels[0]):
         prefix = "virus/"
@@ -160,7 +163,7 @@ def main():
 
     textScreen(screen, "intro.txt")   
 
-    for level in levels:
+    for level in "one.txt", "two.txt", "three.txt", "four.txt", "five.txt":
         packets(topology=prefix+level, 
                 mkDevice = mkComputer, 
                 handleEvent = handle, 
@@ -171,7 +174,7 @@ def main():
             winsound.play()
         sleep(.75)
 
-    for arena in arenas:
+    for arena in "six.txt", "arena.txt", "giveandtake.txt":
         packets(topology=prefix+arena, 
             mkDevice = mkComputerArena, 
             handleEvent = handle,
