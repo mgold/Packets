@@ -1,5 +1,4 @@
-Welcome to Virus! Your goal is
-to take over every computer in
-this network by sending enough
-packets to it that its number
-goes to zero.
+Welcome to Virus! Your goal is to take
+over every computer in this network by
+sending enough packets to it that its
+number goes to zero.

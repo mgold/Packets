@@ -99,7 +99,7 @@ def arenaWin(devices):
      return len([d for d in devices if d.owner == "RED"]) and len([d for d in devices if d.owner == "GREEN"])
 
 def textScreen(screen, filename):
-    text = Text(screen, 10, 10, filename)
+    text = Text(screen, 25, 10, filename)
     textLen = len(text.message)
 
     clock = pygame.time.Clock()
@@ -158,7 +158,7 @@ def main():
         except Exception:
             winsound = None
 
-    textScreen(screen, "credits2.txt")   
+    textScreen(screen, "intro.txt")   
 
     for level in levels:
         packets(topology=prefix+level, 
