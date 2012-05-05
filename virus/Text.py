@@ -16,7 +16,7 @@ class Text(Device):
 
         self.font = pygame.font.SysFont(u'couriernew,courier', 18, bold=True)
         self.color = (0, 192, 0) #Change if you like
-        self.offset = 16 #Increment the y value to print a new line of text
+        self.offset = 25 #Increment the y value to print a new line of text
 
         #Store contents of text file in 'message'
         self.message = [] #List of strings (lines of the message)

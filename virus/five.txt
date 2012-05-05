@@ -1,18 +1,32 @@
 
-
-
-
-
             
-            a           b           c
+
+
+    a                   b                   c
 
 
 
-            f           F           d
 
 
 
-            h           g           e
+
+
+
+
+
+    f                   F                   d
+
+
+
+
+
+
+
+
+
+
+
+    h                   g                   e
 
 (
 ab

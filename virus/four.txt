@@ -1,13 +1,31 @@
 
-    B       D
 
-        A     f
 
-  b  c  g  d  e
 
-  a     W
+                  B           D
 
-    X       Q
+
+
+                        A                     f
+
+
+
+
+
+
+  b          c          g          d          e
+
+
+
+
+
+
+  a                     W
+
+
+
+
+                   X         Q
 
 (
 ab
