@@ -135,7 +135,8 @@ def main():
 =======
 >>>>>>> 0868a2c3f74062bc7773fdc567b0c76262715242
 
-    if not os.path.isfile(levels[0]) and os.path.isfile("virus/"+levels[0]):
+    testfile = "one.txt"
+    if not os.path.isfile(testfile) and os.path.isfile("virus/"+testfile):
         prefix = "virus/"
     else:
         prefix = ""
