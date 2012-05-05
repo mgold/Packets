@@ -101,7 +101,6 @@ def arenaWin(devices):
 def textScreen(screen, filename):
     text = Text(screen, 10, 10, filename)
     textLen = len(text.message)
-    #Assumptions of coupling: text.message does not change, and accesses/mutates text.current
 
     clock = pygame.time.Clock()
     FPS = 50
@@ -118,10 +117,10 @@ def textScreen(screen, filename):
                 if event.key == K_ESCAPE:
                     quit()
             elif event.type == MOUSEBUTTONDOWN:
-                if text.current < textLen:
-                    text.current = textLen
-                else:
+                if text.current_line  == textLen:
                     return
+                else:
+                    text.current_line = textLen
     
         text.update()
         screen.fill((0,0,0))

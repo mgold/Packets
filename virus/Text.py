@@ -22,7 +22,7 @@ class Text(Device):
         self.message = [] #List of strings (lines of the message)
         for name in filename, "virus/"+filename:
             try:
-                self.message = [line.strip() for line in open('filename')]
+                self.message = [line.strip() for line in open(filename)]
                 break
             except Exception:
                 pass
@@ -33,36 +33,36 @@ class Text(Device):
         self.max_time_to_next_char = 3
         self.time_to_next_char = self.max_time_to_next_char #Spaces out printing of chars one by one
         
-        print self.message
-        
     def update(self):
-        if self.time_to_next_char == 0:
-            if self.current_char > len(self.message[self.current_line]): #If we've gotten to the end of this line
-                self.current_line += 1 #Move onto the next line and start working on that one
-                self.current_char = 0 #Reset to the first char of the next line
-            else:
-                self.current_char += 1
-            self.time_to_next_char = self.max_time_to_next_char
+        if self.current_line < len(self.message):
+            if self.time_to_next_char == 0:
+                if self.current_char > len(self.message[self.current_line]): #If we've gotten to the end of this line
+                    self.current_line += 1 #Move onto the next line and start working on that one
+                    self.current_char = 0 #Reset to the first char of the next line
+                elif self.current_line != len(self.message):
+                    self.current_char += 1
+                self.time_to_next_char = self.max_time_to_next_char
 
-        else:
-            self.time_to_next_char -= 1
+            else:
+                self.time_to_next_char -= 1
 
     def draw(self):
         line = 0
         #Print all previously printed lines
         while line < self.current_line:
-            to_print = self.font.render(str(self.message[line]), True, self.color)
             y = self.offset + self.offset*line
-            self.print_message(to_print, y)
+            self.print_message(self.message[line], y)
             line += 1
         #Then print the next char on the current line
-        to_print = str(self.message[self.current_line])
-        to_print = self.font.render(str(to_print[:self.current_char]), True, self.color)
-        y = self.offset + self.offset*self.current_line
-        self.print_message(to_print, y)
+        if line != len(self.message):
+            to_print = self.message[self.current_line]
+            to_print = to_print [:self.current_char]
+            y = self.offset + self.offset*self.current_line
+            self.print_message(to_print, y)
     
     def print_message(self, to_print, y):
-        self.screen.blit(to_print, (self.x,y))
+        rendered  = self.font.render(str(to_print), True, self.color)
+        self.screen.blit(rendered, (self.x,y))
 
         
 #Testing module
