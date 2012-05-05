@@ -2,19 +2,27 @@
 
 
 
-    
+
+      A                            0      Y  
 
 
 
 
-    A                          0    Y  
-
-      a      b      c      d      e
+      a        b        c        d        e
 
 
-      f      g      h      i      j
+
+
+
+      f        g        h        i        j
+
+
+
+
+
+
        
-    B    1                          Z
+      B      1                            Z
 
 (
 B1
