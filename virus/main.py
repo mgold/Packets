@@ -158,7 +158,7 @@ def main():
 
     textScreen(screen, "intro.txt")   
 
-    for level in "one.txt", "three.txt", "two.txt", "four.txt", "five.txt":
+    for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt":
         packets(topology=prefix+level, 
                 mkDevice = mkComputer, 
                 handleEvent = handle, 
@@ -170,8 +170,8 @@ def main():
         sleep(.75)
         if level == "one.txt":
             textScreen(screen, "inter1.txt")
-        
-    textScreen(screen, "inter3.txt")
+    
+    textScreen(screen, "inter2.txt")
 
     for arena in "six.txt", "arena.txt", "giveandtake.txt":
         packets(topology=prefix+arena, 
@@ -184,6 +184,7 @@ def main():
             winsound.play()
         sleep(.75)
 
+    textScreen(screen, "credits0.txt")   
     textScreen(screen, "credits1.txt")   
     textScreen(screen, "credits2.txt")   
 
