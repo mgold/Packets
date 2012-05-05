@@ -1,5 +1,7 @@
-Welcome to Virus! Your goal is
-to take over every computer in
-this network by sending enough
-packets to it that its number
-goes to zero.
+Welcome to Virus! Infect every computer
+in the network by sending it packets 
+across a link. Tap the red circle, and
+then the gray circle it's connected to.
+Each packet decreases the target's count
+by one. When it goes to zero, the computer
+is yours!

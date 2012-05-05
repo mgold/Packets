@@ -158,7 +158,7 @@ def main():
         except Exception:
             winsound = None
 
-    textScreen(screen, "credits2.txt")   
+    textScreen(screen, "intro.txt")   
 
     for level in levels:
         packets(topology=prefix+level, 
