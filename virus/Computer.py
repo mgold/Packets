@@ -61,6 +61,9 @@ class Computer(Device):
                 self.forwardOn = None
 
     def attack(self, target):
+        if target == self:
+            self.forwardOn = None
+            return
         for link in self.links:
             if link.other(self) == target:
                 self.forwardOn = link

@@ -75,10 +75,9 @@ def mkLinkArena(screen, id1, device1, id2, device2):
 def handle(event, devices, selectedDevice):
     if event.type == MOUSEBUTTONDOWN:
         for device in devices:
-            if not isinstance(device, Text) and device.rect.collidepoint(event.pos):
+            if device.rect.collidepoint(event.pos):
                 if selectedDevice:
-                    if selectedDevice != device:
-                        selectedDevice.attack(device)
+                    selectedDevice.attack(device)
                     try:
                         loadSound("deselect.wav").play()
                     except Exception: pass
