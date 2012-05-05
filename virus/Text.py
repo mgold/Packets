@@ -16,47 +16,56 @@ class Text(Device):
 
         self.font = pygame.font.SysFont(u'couriernew,courier', 18, bold=True)
         self.color = (0, 192, 0) #Change if you like
-        self.num_chars_per_line = 35
         self.offset = 15 #Increment the y value to print a new line of text
 
         #Store contents of text file in 'message'
-        self.message = ""
+        self.message = [] #List of strings (lines of the message)
         for name in filename, "virus/"+filename:
             try:
                 with open(name, 'r') as f:
-                    self.message = f.read()
+                    self.message = f.readlines()
                 break
             except Exception:
                 pass
 
-        self.current = 0 #Keeps track of which char we're on for slicing
+        self.current_char = 0 #Keeps track of which char we're on for slicing
+        self.current_line = 0 #Keeps track of which line in the message we're on (index for the list)
         
         self.max_time_to_next_char = 3
         self.time_to_next_char = self.max_time_to_next_char #Spaces out printing of chars one by one
         
-        #print self.message
+        print self.message
         
     def update(self):
         if self.time_to_next_char == 0:
-            self.current += 1
+            if self.current_char > len(self.message[self.current_line]): #If we've gotten to the end of this line
+                self.current_line += 1 #Move onto the next line and start working on that one
+                self.current_char = 0 #Reset to the first char of the next line
+            else:
+                self.current_char += 1
             self.time_to_next_char = self.max_time_to_next_char
-            #print "Current = " + str(self.current)
+
         else:
             self.time_to_next_char -= 1
 
     def draw(self):
-		if self.current > self.num_chars_per_line:
-			num_lines = self.current / self.num_chars_per_line # Calculate number of lines that will be needed to print the message
-			if self.current % self.num_chars_per_line > 0:
-				num_lines += 1
-			for line in range(num_lines): # Iterate through that number of lines
-				for char in range(self.num_chars_per_line):
-					to_print = self.font.render(str(self.message[(line*self.num_chars_per_line):(line*self.num_chars_per_line + char)]), True, self.color) # For each line, print the right segment of the message
-					self.screen.blit(to_print, (self.x,self.y+(self.offset*line))) # At y+(line # * 5) or whatever increment
-		else:
-			to_print = self.font.render(str(self.message[:self.current]), True, self.color) #Take what we have of the message so far...
-			self.screen.blit(to_print, (self.x,self.y)) #...and blit it to the screen
+        line = 0
+        #Print all previously printed lines
+        while line < self.current_line:
+            to_print = self.font.render(str(self.message[line]), True, self.color)
+            y = self.offset + self.offset*line
+            self.print_message(to_print, y)
+            line += 1
+        #Then print the next char on the current line
+        to_print = str(self.message[self.current_line])
+        to_print = self.font.render(str(to_print[:self.current_char]), True, self.color)
+        y = self.offset + self.offset*self.current_line
+        self.print_message(to_print, y)
+    
+    def print_message(self, to_print, y):
+        self.screen.blit(to_print, (self.x,y))
 
+        
 #Testing module
 if __name__ == "__main__":
     main()
