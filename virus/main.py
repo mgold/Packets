@@ -77,12 +77,12 @@ def handle(event, devices, selectedDevice):
         for device in devices:
             if device.rect.collidepoint(event.pos):
                 if selectedDevice:
-                    selectedDevice.attack(device)
-                    try:
-                        loadSound("deselect.wav").play()
-                    except Exception: pass
-                    selectedDevice.selected = False
-                    return None
+                    if selectedDevice.attack(device): #Returns True if successful
+                        try:
+                            loadSound("deselect.wav").play()
+                        except Exception: pass
+                        selectedDevice.selected = False
+                        return None
                 elif device.owner == "RED":
                     try:
                         loadSound("select.wav").play()

@@ -63,7 +63,7 @@ class Computer(Device):
     def attack(self, target):
         if target == self:
             self.forwardOn = None
-            return
+            return True
         for link in self.links:
             if link.other(self) == target:
                 self.forwardOn = link
@@ -71,6 +71,8 @@ class Computer(Device):
                     and target.forwardOn 
                     and target.forwardOn.other(target) == self): 
                     target.forwardOn = None #Prevent forwarding loops
+                return True
+        return False
 
     def packet(self):
         packet = Packet(self.screen, self.pos[0], self.pos[1])
