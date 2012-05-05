@@ -128,12 +128,6 @@ def textScreen(screen, filename):
         pygame.display.flip() 
 
 def main():
-<<<<<<< HEAD
-    levels = ["one.txt", "two.txt", "three.txt", "four.txt", "five.txt"]
-
-    arenas = ["six.txt", "arena.txt", "giveandtake.txt"]
-=======
->>>>>>> 0868a2c3f74062bc7773fdc567b0c76262715242
 
     testfile = "one.txt"
     if not os.path.isfile(testfile) and os.path.isfile("virus/"+testfile):
@@ -171,9 +165,6 @@ def main():
                 guard=winningCondition, 
                 mkLink = mkLink, 
                 screen = screen)
-        if winsound:
-            winsound.play()
-        sleep(.75)
 
     for arena in "six.txt", "arena.txt", "giveandtake.txt":
         packets(topology=prefix+arena, 
@@ -185,6 +176,11 @@ def main():
         if winsound:
             winsound.play()
         sleep(.75)
+
+    if winsound:
+        winsound.play()
+        sleep(.75)
+
 
     textScreen(screen, "credits1.txt")   
     textScreen(screen, "credits2.txt")   
