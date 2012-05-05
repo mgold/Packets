@@ -4,7 +4,7 @@
 
 
 
-             A         B         C         
+             A          B          C          
 
 
 
@@ -14,7 +14,7 @@
 
 
 
-   a                                       D
+   a                                         e
 
 
 
@@ -25,14 +25,14 @@
 
 
 
-              b        c        d   
+                  b     c     d   
 
 (
 Aa
 AB
 BC
-CD
-Dd
+Ce
+ed
 dc
 cb
 ba
