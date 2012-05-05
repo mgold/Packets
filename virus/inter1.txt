@@ -1,0 +1,4 @@
+Very good! Larger circles represent
+more powerful computers. They make
+virus packets faster but are harder
+to infect at first.
