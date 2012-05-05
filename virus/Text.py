@@ -22,7 +22,7 @@ class Text(Device):
         self.message = [] #List of strings (lines of the message)
         for name in filename, "virus/"+filename:
             try:
-                self.message = [line.strip() for line in open(filename)]
+                self.message = [line.strip() for line in open(name)]
                 break
             except Exception:
                 pass
