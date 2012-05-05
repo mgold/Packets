@@ -36,15 +36,20 @@ class Text(Device):
     def update(self):
         if self.current_line < len(self.message):
             if self.time_to_next_char == 0:
-                if self.current_char > len(self.message[self.current_line]): #If we've gotten to the end of this line
-                    self.current_line += 1 #Move onto the next line and start working on that one
-                    self.current_char = 0 #Reset to the first char of the next line
-                elif self.current_line != len(self.message):
-                    self.current_char += 1
+                self.next_char()
                 self.time_to_next_char = self.max_time_to_next_char
-
             else:
                 self.time_to_next_char -= 1
+
+    def next_char(self):
+        if self.current_line < len(self.message):
+            self.current_char += 1
+            while self.current_char >= len(self.message[self.current_line]): #If we've gotten to the end of this line
+                self.current_line += 1 #Move onto the next line and start working on that one
+                self.current_char = 0 #Reset to the first char of the next line
+            if (self.current_line < len(self.message) and 
+                self.message[self.current_line][self.current_char] == " "):
+                self.next_char()
 
     def draw(self):
         line = 0
