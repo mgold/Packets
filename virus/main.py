@@ -129,7 +129,8 @@ def textScreen(screen, filename):
 
 def main():
 
-    if not os.path.isfile(levels[0]) and os.path.isfile("virus/"+levels[0]):
+    testfile = "one.txt"
+    if not os.path.isfile(testfile) and os.path.isfile("virus/"+testfile):
         prefix = "virus/"
     else:
         prefix = ""
