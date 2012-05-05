@@ -128,7 +128,7 @@ def textScreen(screen, filename):
         pygame.display.flip() 
 
 def main():
-    levels = ["two.txt", "two.txt", "three.txt", "four.txt", "five.txt"]
+    levels = ["giveandtake.txt", "two.txt", "three.txt", "four.txt", "five.txt"]
 
     arenas = ["six.txt", "arena.txt", "giveandtake.txt"]
 
