@@ -159,8 +159,6 @@ def main():
             winsound = None
 
     textScreen(screen, "intro.txt")   
-    textScreen(screen, "credits1.txt")   
-    textScreen(screen, "credits2.txt")   
 
     for level in levels:
         packets(topology=prefix+level, 
@@ -183,6 +181,9 @@ def main():
         if winsound:
             winsound.play()
         sleep(.75)
+
+    textScreen(screen, "credits1.txt")   
+    textScreen(screen, "credits2.txt")   
 
 if __name__ == "__main__":
     main()
