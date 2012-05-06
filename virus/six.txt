@@ -13,7 +13,7 @@
 
 
 
-       b       c       C       d        e
+       b       c       0       d        e
 
 
 
@@ -29,16 +29,16 @@
 (
 Ab
 bc
-cC
-Cd
+c0
+0d
 de
 eZ
 cg
 cf
 df
 dg
-Cg
-Cf
+0g
+0f
 Ag
 ge
 Zf

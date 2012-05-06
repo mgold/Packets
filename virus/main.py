@@ -68,7 +68,7 @@ def mkComputerArena(screen, x, y, id):
     return computer
 
 def mkLinkArena(screen, id1, device1, id2, device2):
-    if (id1.isdigit() and id2.isupper()) or (id1.isupper() and id2.islower()):
+    if id1.isdigit() or (id1.isupper() and id2.islower()):
         return Firewall(screen, device1, device2)
     return Link(screen, device1, device2)
 

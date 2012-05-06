@@ -2,5 +2,5 @@ When you attack, all the packets in that
 computer are sent, as well any that 
 arrive there later. To stop forwarding, 
 click a computer twice. Notice that this 
-all-or- nothing approach leaves infected 
+all-or-nothing approach leaves infected 
 computer vulnerable...

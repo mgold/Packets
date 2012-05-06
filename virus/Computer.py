@@ -43,10 +43,12 @@ class Computer(Device):
                 self.timeToSend = self.maxTimeToSend
             else:
                 self.timeToSend -= 1
-            
+
+            #AI
             if self.owner == "GREEN":
                 for link in self.links:
-                    if link.other(self).owner != self.owner:
+                    if (link.other(self).owner != self.owner and
+                        not (hasattr(link, "owner") and link.owner != self.owner)):
                         self.attack(link.other(self))
                         return
 
