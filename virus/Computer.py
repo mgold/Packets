@@ -83,6 +83,7 @@ class Computer(Device):
         return packet
 
     def changeOwner(self, newOwner, count=0):
+        self.selected = False
         self.count = count
         self.owner = newOwner
         if newOwner == "RED":

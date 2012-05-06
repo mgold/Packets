@@ -73,6 +73,8 @@ def mkLinkArena(screen, id1, device1, id2, device2):
     return Link(screen, device1, device2)
 
 def handle(event, devices, selectedDevice):
+    if selectedDevice and not selectedDevice.selected:
+        selectedDevice = None
     if event.type == MOUSEBUTTONDOWN:
         for device in devices:
             if device.rect.collidepoint(event.pos):
@@ -157,7 +159,7 @@ def main():
 
     textScreen(screen, "intro.txt")   
 
-    if False: #False to skip early levels, True for release
+    if True: #False to skip early levels, True for release
         for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt":
             packets(topology=prefix+level, 
                     mkDevice = mkComputer, 
