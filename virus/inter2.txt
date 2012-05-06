@@ -1,6 +1,6 @@
-When you attack, all the packets in that
-computer are sent, as well any that 
-arrive there later. To stop forwarding, 
-click a computer twice. Notice that this 
-all-or-nothing approach leaves infected 
-computer vulnerable...
+When you move packets between computers,
+all the packets in that computer are sent, 
+as well any that arrive there later. To 
+stop forwarding, click a computer twice.
+Notice that this all-or-nothing approach 
+leaves your computers vulnerable...
