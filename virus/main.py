@@ -68,22 +68,23 @@ def mkComputerArena(screen, x, y, id):
     return computer
 
 def mkLinkArena(screen, id1, device1, id2, device2):
-    if (id1.isdigit() and id2.isupper()) or (id1.isupper() and id2.islower()):
+    if id1.isdigit() or (id1.isupper() and id2.islower()):
         return Firewall(screen, device1, device2)
     return Link(screen, device1, device2)
 
 def handle(event, devices, selectedDevice):
+    if selectedDevice and not selectedDevice.selected:
+        selectedDevice = None
     if event.type == MOUSEBUTTONDOWN:
         for device in devices:
-            if not isinstance(device, Text) and device.rect.collidepoint(event.pos):
+            if device.rect.collidepoint(event.pos):
                 if selectedDevice:
-                    if selectedDevice != device:
-                        selectedDevice.attack(device)
-                    try:
-                        loadSound("deselect.wav").play()
-                    except Exception: pass
-                    selectedDevice.selected = False
-                    return None
+                    if selectedDevice.attack(device): #Returns True if successful
+                        try:
+                            loadSound("deselect.wav").play()
+                        except Exception: pass
+                        selectedDevice.selected = False
+                        return None
                 elif device.owner == "RED":
                     try:
                         loadSound("select.wav").play()
@@ -158,6 +159,7 @@ def main():
 
     textScreen(screen, "intro.txt")   
 
+<<<<<<< HEAD
     for level in "one.txt", "two.txt", "three.txt", "four.txt", "five.txt":
         packets(topology=prefix+level, 
                 mkDevice = mkComputer, 
@@ -165,6 +167,25 @@ def main():
                 guard=winningCondition, 
                 mkLink = mkLink, 
                 screen = screen)
+=======
+    if True: #False to skip early levels, True for release
+        for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt":
+            packets(topology=prefix+level, 
+                    mkDevice = mkComputer, 
+                    handleEvent = handle, 
+                    guard=winningCondition, 
+                    mkLink = mkLink, 
+                    screen = screen)
+            if winsound:
+                winsound.play()
+            sleep(.75)
+            if level == "one.txt":
+                textScreen(screen, "inter1.txt")
+            elif level == "three.txt":
+                textScreen(screen, "inter2.txt")
+        
+    textScreen(screen, "inter3.txt")
+>>>>>>> ed4125ee5050301e8c95e0e740484f66d9d729ad
 
     for arena in "six.txt", "arena.txt", "giveandtake.txt":
         packets(topology=prefix+arena, 
@@ -177,11 +198,15 @@ def main():
             winsound.play()
         sleep(.75)
 
+<<<<<<< HEAD
     if winsound:
         winsound.play()
         sleep(.75)
 
 
+=======
+    textScreen(screen, "credits0.txt")   
+>>>>>>> ed4125ee5050301e8c95e0e740484f66d9d729ad
     textScreen(screen, "credits1.txt")   
     textScreen(screen, "credits2.txt")   
 

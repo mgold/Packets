@@ -43,10 +43,12 @@ class Computer(Device):
                 self.timeToSend = self.maxTimeToSend
             else:
                 self.timeToSend -= 1
-            
+
+            #AI
             if self.owner == "GREEN":
                 for link in self.links:
-                    if link.other(self).owner != self.owner:
+                    if (link.other(self).owner != self.owner and
+                        not (hasattr(link, "owner") and link.owner != self.owner)):
                         self.attack(link.other(self))
                         return
 
@@ -61,6 +63,9 @@ class Computer(Device):
                 self.forwardOn = None
 
     def attack(self, target):
+        if target == self:
+            self.forwardOn = None
+            return True
         for link in self.links:
             if link.other(self) == target:
                 self.forwardOn = link
@@ -68,6 +73,8 @@ class Computer(Device):
                     and target.forwardOn 
                     and target.forwardOn.other(target) == self): 
                     target.forwardOn = None #Prevent forwarding loops
+                return True
+        return False
 
     def packet(self):
         packet = Packet(self.screen, self.pos[0], self.pos[1])
@@ -76,6 +83,7 @@ class Computer(Device):
         return packet
 
     def changeOwner(self, newOwner, count=0):
+        self.selected = False
         self.count = count
         self.owner = newOwner
         if newOwner == "RED":

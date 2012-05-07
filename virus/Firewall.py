@@ -14,7 +14,7 @@ class Firewall(Link):
     """
 
     def __init__ (self, screen, d1, d2, speed=5):
-        Link.__init__(self, screen, d1, d2)
+        Link.__init__(self, screen, d1, d2, speed)
 
         self.good = self.d1
         self.bad = self.d2
