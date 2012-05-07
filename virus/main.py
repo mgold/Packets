@@ -159,15 +159,6 @@ def main():
 
     textScreen(screen, "intro.txt")   
 
-<<<<<<< HEAD
-    for level in "one.txt", "two.txt", "three.txt", "four.txt", "five.txt":
-        packets(topology=prefix+level, 
-                mkDevice = mkComputer, 
-                handleEvent = handle, 
-                guard=winningCondition, 
-                mkLink = mkLink, 
-                screen = screen)
-=======
     if True: #False to skip early levels, True for release
         for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt":
             packets(topology=prefix+level, 
@@ -185,7 +176,6 @@ def main():
                 textScreen(screen, "inter2.txt")
         
     textScreen(screen, "inter3.txt")
->>>>>>> ed4125ee5050301e8c95e0e740484f66d9d729ad
 
     for arena in "six.txt", "arena.txt", "giveandtake.txt":
         packets(topology=prefix+arena, 
@@ -198,15 +188,7 @@ def main():
             winsound.play()
         sleep(.75)
 
-<<<<<<< HEAD
-    if winsound:
-        winsound.play()
-        sleep(.75)
-
-
-=======
     textScreen(screen, "credits0.txt")   
->>>>>>> ed4125ee5050301e8c95e0e740484f66d9d729ad
     textScreen(screen, "credits1.txt")   
     textScreen(screen, "credits2.txt")   
 
