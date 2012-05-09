@@ -1,6 +1,5 @@
 import pygame
 from pygame.locals import *
-from Device import Device
 from Link import Link
 
 def loadLevel(level_name, screen, mkDevice=None, mkLink=None):
@@ -26,6 +25,10 @@ def loadLevel(level_name, screen, mkDevice=None, mkLink=None):
     Return type: a tuple of a list of Device objects and a list of Link objects.
     """
 
+    #In Virus for Android, we always have a custom mkDevice.
+    if not mkDevice:
+        raise pygame.Error("No mkDevice")
+
     devices = {}
 
     col = row = 0
@@ -43,10 +46,7 @@ def loadLevel(level_name, screen, mkDevice=None, mkLink=None):
         elif region == "(":
            return links(screen, spriteMap, devices, mkLink)
         else:
-            if mkDevice:
-                devices[region] = mkDevice(screen, x, y, region)
-            else:
-                devices[region] = Device(screen, x, y) 
+            devices[region] = mkDevice(screen, x, y, region)
 
         col += 1
         region = spriteMap.read(1)
