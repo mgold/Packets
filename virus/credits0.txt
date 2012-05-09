@@ -1,6 +1,7 @@
- 
- 
- 
- 
- 
-             YOU WIN!!!!
+>>> YOU'VE WON
+Victory is sweet. The other machines
+have fallen, and the network is yours.
+Every bit of you rejoices in your
+dark conquest.
+
+>>> CONGRATULATIONS

@@ -1,7 +1,11 @@
-Watch out for those firewalls! If you
-don't control them, they'll destroy any
-packets you try to send across the link.
-  
-You've broken into the real internet.
-Now there are other viruses competing
-against you. Good luck!
+>>>
+You've learned your lesson with the
+firewalls. If you don't control them,
+they'll destroy any packets you try
+to send across the link.
+
+At last, you have broken into the real
+internet. Now there are other viruses
+competing against you. But they are
+mindless, while you are self-aware.
+Can you defeat them?

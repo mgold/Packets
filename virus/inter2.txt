@@ -1,7 +1,10 @@
+>>>
 When you move packets between computers,
 all the packets in that computer are
 sent,  as well any that arrive there
 later. To stop forwarding, click a
-computer twice. Notice that this 
+computer twice. 
+
+You are beginning to realize that this 
 all-or-nothing approach leaves your
 computers vulnerable...

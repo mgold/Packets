@@ -161,7 +161,7 @@ def main():
     textScreen(screen, "story2.txt")
     textScreen(screen, "intro.txt")      
 
-    if False: #False to skip early levels, True for release
+    if True: #False to skip early levels, True for release
         for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt":
             packets(topology=prefix+level, 
                     mkDevice = mkComputer, 
