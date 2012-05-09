@@ -1,18 +1,19 @@
 import pygame
 from pygame.locals import *
 from core.Packet import Packet
-from core.Device import Device
 from copy import copy
 
-class Computer(Device):
+class Computer(pygame.sprite.Sprite):
     def __init__ (self, screen, x, y, radius=20):
-        Device.__init__(self, screen, x, y)
+        self.screen = screen
+        self.pos = (x, y) 
         self.radius = radius
+        self.links = []
         self.rect = pygame.Rect(x-self.radius, y-self.radius, 2*self.radius, 2*self.radius)
+        self.color = (96, 96, 96) 
 
         self.owner = None
         self.count = 0
-        self.color = (96, 96, 96) 
 
         self.selectColor = (223, 223, 233)
         self.selected = False

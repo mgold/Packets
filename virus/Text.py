@@ -1,13 +1,11 @@
 import pygame, sys
 from pygame.locals import *
-from core.Device import Device
 
-class Text(Device):
+class Text(pygame.sprite.Sprite):
     """
     Text - Virus
 
-    Displays text. Not really a device, just a subclass of it to make things
-    easier. 
+    Displays text. 
     """
     def __init__ (self, screen, x, y, filename):
         self.screen = screen
