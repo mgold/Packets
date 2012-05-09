@@ -157,7 +157,9 @@ def main():
         except Exception:
             winsound = None
 
-    textScreen(screen, "intro.txt")   
+    textScreen(screen, "story.txt")
+    textScreen(screen, "story2.txt")
+    textScreen(screen, "intro.txt")      
 
     if True: #False to skip early levels, True for release
         for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt":

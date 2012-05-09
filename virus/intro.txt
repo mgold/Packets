@@ -1,9 +1,10 @@
-Welcome to Virus! Infect every computer
+>>> INSTRUCTIONS
+Infect every computer
 in the network by sending it packets 
 across a link. Tap the red circle, and
 then the gray circle it's connected to.
 Each packet decreases the target's count
 by one. When it goes to zero, the 
-computer is yours!
+computer is yours.
  
 (Tap screen to continue)
