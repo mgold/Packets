@@ -1,0 +1,44 @@
+
+
+
+                                    b         c
+
+
+
+
+
+
+
+                                    a         d
+
+
+
+
+
+
+
+
+
+  f         e
+
+
+
+
+
+
+
+  g         h
+
+
+
+
+(
+ab
+bc
+cd
+da
+ae
+eh
+hg
+gf
+fe

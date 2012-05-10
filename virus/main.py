@@ -171,7 +171,7 @@ def main():
     textScreen(screen, "instructions.txt")      
 
     if True: #False to skip early levels, True for release
-        for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt", "seven.txt", "eight.txt":
+        for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt", "seven.txt", "eight.txt", "nine.txt", "ten.txt":
             if packets(topology=prefix+level, 
                     mkDevice = mkComputer, 
                     handleEvent = handle, 
