@@ -170,8 +170,8 @@ def main():
     textScreen(screen, "title.txt")
     textScreen(screen, "instructions.txt")      
 
-    if True: #False to skip early levels, True for release
-        for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt", "seven.txt", "eight.txt", "nine.txt", "ten.txt":
+    if False: #False to skip early levels, True for release
+        for level in "one.txt", "two.txt", "ten.txt", "seven.txt", "four.txt", "three.txt", "eight.txt", "five.txt":
             if packets(topology=prefix+level, 
                     mkDevice = mkComputer, 
                     handleEvent = handle, 
@@ -183,8 +183,6 @@ def main():
                 sleep(.75)
                 if level == "one.txt":
                     textScreen(screen, "inter1.txt")
-                elif level == "three.txt":
-                    textScreen(screen, "inter2.txt")
             else:
                 return lose(screen)
         
@@ -200,6 +198,8 @@ def main():
             if winsound:
                 winsound.play()
             sleep(.75)
+            if arena == "six.txt":
+                textScreen(screen, "inter2.txt")
         else:
             return lose(screen)
 
