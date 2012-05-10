@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from virus.main import main
 try:
     import android
