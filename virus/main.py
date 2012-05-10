@@ -166,11 +166,11 @@ def main():
         except Exception:
             winsound = None
 
-    textScreen(screen, "story.txt")
+    #textScreen(screen, "story.txt")
     textScreen(screen, "title.txt")
-    textScreen(screen, "instructions.txt")      
+    #textScreen(screen, "instructions.txt")      
 
-    if False: #False to skip early levels, True for release
+    if True: #False to skip early levels, True for release
         for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt":
             if packets(topology=prefix+level, 
                     mkDevice = mkComputer, 
