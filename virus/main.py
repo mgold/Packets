@@ -172,7 +172,7 @@ def main():
     textScreen(screen, "instructions.txt")      
 
     if True: #False to skip early levels, True for release
-        for level in "one.txt", "two.txt", "ten.txt", "seven.txt", "four.txt", "three.txt",  "five.txt":
+        for level in "one.txt", "two.txt", "seven.txt", "four.txt", "three.txt",  "five.txt":
             if packets(topology=prefix+level, 
                     mkDevice = mkComputer, 
                     handleEvent = handle, 
@@ -189,7 +189,7 @@ def main():
         
     textScreen(screen, "inter3.txt")
 
-    for arena in "six.txt", "arena.txt", "four-reprise.txt", "eight.txt", "giveandtake.txt":
+    for arena in "arena.txt", "four-reprise.txt", "six.txt", "eight.txt", "giveandtake.txt", "dmz.txt" :
         if packets(topology=prefix+arena, 
                 mkDevice = mkComputerArena, 
                 handleEvent = handle,
