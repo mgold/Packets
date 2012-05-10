@@ -31,8 +31,7 @@ returned value of configure, or None if no configure was supplied, on the first
 call. Should return a closure to be used on the next call.
 
 guard(devices): Used to terminate the game loop. Should return False if/when you
-want packets() to return. Default is the constant True function. If the loop
-ever terminates, the closure is returned.
+want packets() to return. Default is the constant True function. 
 
 screen: a Surface object obtained by calling pygame.display.get_surface().
 Allows custom screen sizes.
@@ -104,8 +103,12 @@ def packets(topology="topology.txt", mkDevice=None, mkLink=None,
             device.draw()
 
         pygame.display.flip() 
-    
-    return closure
+   
+    #Kludgey coupling, yay for dedicated branch:
+    for device in devices:
+        if device.owner == "RED":
+            return True
+    return False
 
 if __name__ == "__main__":
     packets()

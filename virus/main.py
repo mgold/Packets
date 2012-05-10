@@ -128,6 +128,9 @@ def textScreen(screen, filename):
         text.draw()
         pygame.display.flip() 
 
+def lose():
+    pass
+
 def main():
 
     testfile = "one.txt"
@@ -163,36 +166,41 @@ def main():
 
     if True: #False to skip early levels, True for release
         for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt":
-            packets(topology=prefix+level, 
+            if packets(topology=prefix+level, 
                     mkDevice = mkComputer, 
                     handleEvent = handle, 
                     guard=winningCondition, 
                     mkLink = mkLink, 
-                    screen = screen)
-            if winsound:
-                winsound.play()
-            sleep(.75)
-            if level == "one.txt":
-                textScreen(screen, "inter1.txt")
-            elif level == "three.txt":
-                textScreen(screen, "inter2.txt")
+                    screen = screen):
+                if winsound:
+                    winsound.play()
+                sleep(.75)
+                if level == "one.txt":
+                    textScreen(screen, "inter1.txt")
+                elif level == "three.txt":
+                    textScreen(screen, "inter2.txt")
+            else:
+                return lose()
         
     textScreen(screen, "inter3.txt")
 
     for arena in "six.txt", "arena.txt", "giveandtake.txt":
-        packets(topology=prefix+arena, 
-            mkDevice = mkComputerArena, 
-            handleEvent = handle,
-            guard=arenaWin,
-            mkLink = mkLinkArena,
-            screen = screen)
-        if winsound:
-            winsound.play()
-        sleep(.75)
+        if packets(topology=prefix+arena, 
+                mkDevice = mkComputerArena, 
+                handleEvent = handle,
+                guard=arenaWin,
+                mkLink = mkLinkArena,
+                screen = screen):
+            if winsound:
+                winsound.play()
+            sleep(.75)
+        else:
+            return lose()
 
     textScreen(screen, "credits0.txt")   
     textScreen(screen, "credits1.txt")   
     textScreen(screen, "credits2.txt")   
+    textScreen(screen, "title.txt")
 
 if __name__ == "__main__":
     main()
