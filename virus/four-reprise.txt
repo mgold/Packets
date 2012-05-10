@@ -1,0 +1,46 @@
+
+
+
+
+                  N           D
+
+
+
+                        M                     Z
+
+
+
+
+
+
+  b          c          0          d          e
+
+
+
+
+
+
+  A                     W
+
+
+
+
+                   X         Q
+
+(
+bA
+bc
+cM
+cW
+dM
+dW
+de
+eZ
+0c
+M0
+W0
+0d
+MN
+MD
+WX
+WQ

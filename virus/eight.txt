@@ -7,59 +7,48 @@
 
 
 
-                   g         h
+                   b         c
 
 
 
 
 
 
-              d         I         e
+    A         d         C         e          Z
 
 
 
 
 
 
-         j         K         M         n
+                   f         g          
 
 
 
 
 
 
-    b         l         f         o         c
+                        h
 
 
 
 (
-ag
-gd
-dj
-jb
-bl
-lf
-fo
-oc
-cn
-ne
-eh
-ha
+ab
+ac
+bc
+bd
+df
+fd
+ge
+ce
+fh
+fg
 gh
-gI
-Ih
-dI
-Ie
-IK
-IM
-dK
-Me
-no
-oM
-Mf
-fK
-Kl
-jl
-KM
-jK
-Mn
+bC
+cC
+dC
+eC
+fC
+gC
+dA
+eZ

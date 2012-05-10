@@ -61,7 +61,7 @@ def mkComputerArena(screen, x, y, id):
         computer.count = 5
     if id == "A" or id == "B":
         computer.changeOwner("RED")
-        computer.count = 10
+        computer.count = 20
     elif id == "Y" or id == "Z":
         computer.changeOwner("GREEN")
         computer.count = 10
@@ -135,6 +135,7 @@ def lose(screen):
 def credits(screen):
     textScreen(screen, "credits1.txt")   
     textScreen(screen, "credits2.txt")   
+    pygame.mixer.music.fadeout(1000)
     textScreen(screen, "title.txt")
 
 def main():
@@ -171,7 +172,7 @@ def main():
     textScreen(screen, "instructions.txt")      
 
     if True: #False to skip early levels, True for release
-        for level in "one.txt", "two.txt", "ten.txt", "seven.txt", "four.txt", "three.txt", "eight.txt", "five.txt":
+        for level in "one.txt", "two.txt", "ten.txt", "seven.txt", "four.txt", "three.txt",  "five.txt":
             if packets(topology=prefix+level, 
                     mkDevice = mkComputer, 
                     handleEvent = handle, 
@@ -188,7 +189,7 @@ def main():
         
     textScreen(screen, "inter3.txt")
 
-    for arena in "six.txt", "arena.txt", "giveandtake.txt":
+    for arena in "six.txt", "arena.txt", "four-reprise.txt", "eight.txt", "giveandtake.txt":
         if packets(topology=prefix+arena, 
                 mkDevice = mkComputerArena, 
                 handleEvent = handle,

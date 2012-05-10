@@ -48,3 +48,8 @@ class Firewall(Link):
         if self.active:
             self.screen.blit(pygame.transform.rotate(self.image, self.theta), self.imagePos)
             Link.draw(self)
+            #Another kludge - expensive, redraws links
+            for device in self.good, self.bad:
+                for link in device.links:
+                    if not isinstance(link, Firewall):
+                        link.draw()
