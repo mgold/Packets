@@ -158,8 +158,8 @@ def main():
             winsound = None
 
     textScreen(screen, "story.txt")
-    textScreen(screen, "story2.txt")
-    textScreen(screen, "intro.txt")      
+    textScreen(screen, "title.txt")
+    textScreen(screen, "instructions.txt")      
 
     if True: #False to skip early levels, True for release
         for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt":
