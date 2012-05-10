@@ -1,13 +1,12 @@
 
 
 
-         c                              d
+         c                             d
 
-      b                                    e
+      b                                   e
 
-   a                                          f 
-
-
+   a                                         f 
+           
               A                   B
 
 
