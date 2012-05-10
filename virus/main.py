@@ -128,8 +128,14 @@ def textScreen(screen, filename):
         text.draw()
         pygame.display.flip() 
 
-def lose():
-    pass
+def lose(screen):
+    textScreen(screen, "lose.txt")
+    return credits(screen)
+
+def credits(screen):
+    textScreen(screen, "credits1.txt")   
+    textScreen(screen, "credits2.txt")   
+    textScreen(screen, "title.txt")
 
 def main():
 
@@ -164,7 +170,7 @@ def main():
     textScreen(screen, "title.txt")
     textScreen(screen, "instructions.txt")      
 
-    if True: #False to skip early levels, True for release
+    if False: #False to skip early levels, True for release
         for level in "one.txt", "two.txt", "four.txt", "three.txt", "five.txt":
             if packets(topology=prefix+level, 
                     mkDevice = mkComputer, 
@@ -180,7 +186,7 @@ def main():
                 elif level == "three.txt":
                     textScreen(screen, "inter2.txt")
             else:
-                return lose()
+                return lose(screen)
         
     textScreen(screen, "inter3.txt")
 
@@ -195,12 +201,10 @@ def main():
                 winsound.play()
             sleep(.75)
         else:
-            return lose()
+            return lose(screen)
 
-    textScreen(screen, "credits0.txt")   
-    textScreen(screen, "credits1.txt")   
-    textScreen(screen, "credits2.txt")   
-    textScreen(screen, "title.txt")
+    textScreen(screen, "win.txt")   
+    return credits(screen)
 
 if __name__ == "__main__":
     main()
