@@ -9,9 +9,9 @@ protocols) by subclassing Device, using a different network topology, and
 passing functions to configure Device and Link objects. A collection of
 extensions is a module (not to be confused with the Python meaning). 
 
-Web is a fairly realistic and detailed model of internet routing
+Web is a fairly realistic and somewhat detailed model of internet routing
 protocols. Virus is game whose objective is to spread a virus across the
-network. Both of these are in fairly early development.
+network. The most recent work is in the branch virus-android. 
 
 Each module (and the core) has its own directory. By convention, the file to
 execute is called main.py. However, due to the way packages work, it is
